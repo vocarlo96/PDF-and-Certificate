@@ -7,6 +7,7 @@
  * Version: 1.0.0
  * License: GPL2
 */
+defined( 'ABSPATH' ) or die( 'Cannot access pages directly.' );
 
     // global $chartsetb;
     // global $wpdb;
@@ -19,10 +20,10 @@
         $sql = "CREATE TABLE $table_name (
             id_certificate INT NOT NULL AUTO_INCREMENT,
             title VARCHAR(100) NOT NULL,
-            PRIMARY KEY  (ide_certificate)
+            PRIMARY KEY  (id_certificate)
         ) $chartset_collate;";
 
-        require_once( ABSPATH . 'wp-admin/includes/upgrades.php');
+        require_once( ABSPATH . 'wp-admin/includes/upgrade.php');
         dbDelta( $sql );
     }
 
