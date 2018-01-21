@@ -1,5 +1,5 @@
 <?php
-
+    global $column_data;
     // function pdfCert_top_level_menu(){
     function pdfCert_menus(){
 
@@ -9,8 +9,6 @@
     }
 
     function pdfCert_primary_content(){
-        // global $chartsetb;
-        // var_dump($chartsetb);
         if ( ! current_user_can('manage_options')){
             return;
         }
@@ -39,6 +37,10 @@
             return;
         }
         global $wpdb;
+        global $column_data;
+        global $pagenow, $typenow;
+        var_dump($pagenow);
+        // var_dump($typenow);
         ?>
         
         <div class="wrap">
@@ -55,7 +57,7 @@
                     <option value="image">Image</option>
                 </select>
                 <label for="table">Table</label>
-                <select name="table" id="option-table">
+                <select name="table" class="option-table">
                     <option value="-">-</option>
                     <?php
                         
@@ -74,8 +76,13 @@
                     ?>
                 </select>
                 <label for="column">Column</label>
+                    <?php
+                        echo '<h1>'.$column_data.'1</h1>';
+
+                    ?>
                 <select name="column" id="option-column">
                     <option value="-">-</option>
+
                     <option value="text">Text</option>
                     <option value="image">Image</option>
                 </select>
@@ -98,5 +105,18 @@
 
     // add_action( 'admin_menu', 'pdfCert_top_level_menu' );
     add_action( 'admin_menu', 'pdfCert_menus' );
+
+    function pdfCert_get_colunm_value() {
+        if ( ! check_ajax_referer( 'wp-job-order', 'security' ) ) {
+            return wp_send_json_error( 'Invalid Nonce' );
+        }
+        if ( ! current_user_can( 'manage_options' ) ) {
+            return wp_send_json_error( 'You are not allow to do this.' );
+        }
+        $column_data = $_POST['value'];
+        wp_send_json_success( 'Post Saved.' );
+    }
+    add_action( 'wp_ajax_get_colunm_value', 'pdfCert_get_colunm_value' );
+
 
 ?>
