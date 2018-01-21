@@ -5,7 +5,10 @@
     }
 
     global $wpdb;
-    $table_name = $wpdb->prefix . "certificate";
-    $wpdb->query("DROP TABLE `{$table_name}`");
+    $table_name = $wpdb->prefix . 'certificate';
+    $table_name2 = $wpdb->prefix . 'certificate_content';
+
+    $wpdb->query("DROP TABLE IF EXISTS `{$table_name}`");
+    $wpdb->query("DROP TABLE IF EXISTS `{$table_name2}`");
 
 ?>
