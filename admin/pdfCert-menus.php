@@ -1,6 +1,6 @@
 <?php
-    global $column_data;
     // function pdfCert_top_level_menu(){
+
     function pdfCert_menus(){
 
         add_menu_page( 'PDF Certificate', 'PDF Certificate', 'manage_options', 'pdf_certificate', 'pdfCert_primary_content', '
@@ -76,15 +76,8 @@
                     ?>
                 </select>
                 <label for="column">Column</label>
-                    <?php
-                        echo '<h1>'.$column_data.'1</h1>';
-
-                    ?>
                 <select name="column" id="option-column">
-                    <option value="-">-</option>
-
-                    <option value="text">Text</option>
-                    <option value="image">Image</option>
+                    <option value="-" class="column-option">-</option>
                 </select>
                 <h5>Dimension</h5>    
                 <label for="type">Width</label>
@@ -113,8 +106,23 @@
         if ( ! current_user_can( 'manage_options' ) ) {
             return wp_send_json_error( 'You are not allow to do this.' );
         }
+        global $wpdb;
         $column_data = $_POST['value'];
-        wp_send_json_success( 'Post Saved.' );
+        $sql = "SELECT `COLUMN_NAME` 
+                FROM `INFORMATION_SCHEMA`.`COLUMNS` 
+                WHERE `TABLE_SCHEMA`='luz' 
+                AND `TABLE_NAME`='$column_data';";
+        $columns_name = $wpdb->get_results($sql);
+        $columns_names = array();
+        foreach($columns_name as $index => $value) {
+            foreach($value as $tableName) {
+                array_push($columns_names, $tableName);                
+            }
+        }
+
+        $columns_names_json = json_encode($columns_names);
+        
+        wp_send_json_success( $columns_names_json );
     }
     add_action( 'wp_ajax_get_colunm_value', 'pdfCert_get_colunm_value' );
 
