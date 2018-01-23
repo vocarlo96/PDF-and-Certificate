@@ -27,14 +27,14 @@ jQuery(document).ready(function($) {
                     console.log(columnsOptions);
                     $( '#option-column .column-option' ).after( columnsOptions );
                 } else {
-                    pageTitle.after( '<div id="message" class="error"><p>' + column_comprobation.failure + '1</p></div>' );
+                    pageTitle.after( '<div id="message" class="error"><p> 1</p></div>' );
                 }
                 
                 
             },
             error: function( error ) {
                 $( 'div#message' ).remove();
-                pageTitle.after( '<div id="message" class="error"><p>' + column_comprobation.failure + '2</p></div>' );
+                pageTitle.after( '<div id="message" class="error"><p>2</p></div>' );
             }
         });
     });

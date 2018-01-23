@@ -13,7 +13,8 @@ jQuery(document).ready(($) => {
         var certificateJsonData = {
             action : 'save_certificate',
             certificateTitle : certificateHtmlData[0].children[0].children["certificate-title"].value,
-            certificateData : new Array()
+            certificateData : new Array(),
+            security: save_comprobation.security
         }
 
         certificateChildrenData.forEach(element => {

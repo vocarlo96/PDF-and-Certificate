@@ -12,6 +12,7 @@
         if ( ! current_user_can('manage_options')){
             return;
         }
+        global $wpdb;
         ?>
         
         <div class="wrap">
@@ -24,6 +25,18 @@
                     <th>title</th>
                     <th>options</th>
                 </tr>
+                <?php
+                    $certificate_table = $wpdb->prefix . 'certificate';
+                    $sql = "SELECT title FROM $certificate_table";
+                    $certificate_table_data = $wpdb->get_results( $sql );
+                    if($certificate_table_data){
+                        foreach($certificate_table_data as $index=>$value){
+                            foreach($value as $title){
+                                echo('<tr><td>' . esc_html($title) . '</td></tr>');
+                            }
+                        }
+                    }
+                ?>
             </table>
         </div>
         
@@ -72,13 +85,15 @@
                                         
                                         $sql = "SHOW TABLES";
                                         $results = $wpdb->get_results($sql);
-                                        foreach($results as $index => $value) {
-                                            foreach($value as $tableName) {
-                                                echo '<option value="';
-                                                echo esc_attr( $tableName );
-                                                echo '">';
-                                                echo esc_html( $tableName );
-                                                echo '</option>';;          
+                                        if($results){
+                                            foreach($results as $index => $value) {
+                                                foreach($value as $tableName) {
+                                                    echo '<option value="';
+                                                    echo esc_attr( $tableName );
+                                                    echo '">';
+                                                    echo esc_html( $tableName );
+                                                    echo '</option>';        
+                                                }
                                             }
                                         }
 
@@ -148,13 +163,20 @@
     add_action( 'wp_ajax_get_colunm_value', 'pdfCert_get_colunm_value' );
     
     function pdfCert_save_certificate(){
-        // header("Content-Type: text/plain");
+        
+        if ( ! check_ajax_referer( 'pdfCert_save_certificate', 'security' ) ) {
+            return wp_send_json_error( 'Invalid Nonce' );
+        }
+        if ( ! current_user_can( 'manage_options' ) ) {
+            return wp_send_json_error( 'You are not allow to do this.' );
+        }
+
         global $wpdb;
         $certificate_table = $wpdb->prefix . 'certificate';
         $certificate_title = $_POST['certificateTitle'];
         // $save_data = json_decode(stripslashes($_POST['value']));
         $sql = "INSERT INTO $certificate_table( title ) VALUES( %s )";
-        $wpdb->query( $wpdb->prepare( $sql, $save_data) );
+        $wpdb->query( $wpdb->prepare( $sql, $certificate_title) );
         
         $sql = "SELECT id_certificate FROM $certificate_table WHERE title=%s";
         $certificate_ids = $wpdb->get_results($wpdb->prepare( $sql , $certificate_title ));

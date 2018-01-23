@@ -21,9 +21,15 @@ defined( 'ABSPATH' ) or die( 'Cannot access pages directly.' );
             // wp_localize_script( 'column-content-js', 'ajax_object', array( 'ajax_url' => plugins_url( 'admin/admin-ajax.php' ) ) );
             wp_localize_script( 'column-content-js', 'column_comprobation', array(
                 'security' => wp_create_nonce( 'pdfCert_certificate' ),
-                'success' => __( 'Jobs sort order has been saved.' ),
-                'failure' => __( 'There was an error saving the sort order, or you do not have proper permissions.' )
+                // 'success' => __( 'Jobs sort order has been saved.' ),
+                // 'failure' => __( 'There was an error saving the sort order, or you do not have proper permissions.' )
             ) );
+
+            wp_localize_script( 'save-certificate-js', 'save_comprobation', array(
+                'security' => wp_create_nonce( 'pdfCert_save_certificate' ),
+                // 'success' => __( 'Jobs sort order has been saved.' ),
+                // 'failure' => __( 'There was an error saving the sort order, or you do not have proper permissions.' )
+            ));
         }
     }
 
