@@ -1,8 +1,8 @@
 jQuery(document).ready(function($) {
-    var tableOption = $('.option-table'); 
+    var tableOption = $('#option-table'); 
     var pageTitle = $('div h1');
-    $( ".option-table" ).change(function() {
-        // console.log(tableOption.options[tableOption.selectedIndex].value);
+    $( "#option-table" ).change(function() {
+        // console.log(tableOption.value);
         let tableValue = tableOption.val().toString();
         console.log(tableValue);
         $.ajax({

@@ -44,53 +44,74 @@
         ?>
         
         <div class="wrap">
+
             <h1>New Certificate</h1>
-            <label for="certificate-title">Title</label>
-            <input type="text" name="certificate-title">
-            <button>Add Content</button>
 
-            <div>
-                <label for="type">Type</label>
-                <select name="type" id="option-type">
-                    <option value="-">-</option>
-                    <option value="text">Text</option>
-                    <option value="image">Image</option>
-                </select>
-                <label for="table">Table</label>
-                <select name="table" class="option-table">
-                    <option value="-">-</option>
-                    <?php
-                        
-                        $sql = "SHOW TABLES";
-                        $results = $wpdb->get_results($sql);
-                        foreach($results as $index => $value) {
-                            foreach($value as $tableName) {
-                                echo '<option value="';
-                                echo esc_attr( $tableName );
-                                echo '">';
-                                echo esc_html( $tableName );
-                                echo '</option>';;          
-                            }
-                        }
+                <div class="certificate-data">
 
-                    ?>
-                </select>
-                <label for="column">Column</label>
-                <select name="column" id="option-column">
-                    <option value="-" class="column-option">-</option>
-                </select>
-                <h5>Dimension</h5>    
-                <label for="type">Width</label>
-                <input type="number" name="">
-                <label for="type">height</label>
-                <input type="number" name="">
-                <h5>Position</h5>    
-                <label for="type">X</label>
-                <input type="number" name="">
-                <label for="type">Y</label>
-                <input type="number" name="">
-            </div>
+                    <div>
+                        <label for="certificate-title">Title</label>
+                        <input type="text" name="certificate-title">
+                        <button>Add Content</button>
+
+                    </div>
+
+                    <div>
+                        <div>
+                            <div>
+                                <label for="type">Type</label>
+                                <select name="type" id="option-type">
+                                    <option value="-">-</option>
+                                    <option value="text">Text</option>
+                                    <option value="image">Image</option>
+                                </select>
+                                <label for="table">Table</label>
+                                <select name="table" id="option-table">
+                                    <option value="-">-</option>
+                                    <?php
+                                        
+                                        $sql = "SHOW TABLES";
+                                        $results = $wpdb->get_results($sql);
+                                        foreach($results as $index => $value) {
+                                            foreach($value as $tableName) {
+                                                echo '<option value="';
+                                                echo esc_attr( $tableName );
+                                                echo '">';
+                                                echo esc_html( $tableName );
+                                                echo '</option>';;          
+                                            }
+                                        }
+
+                                    ?>
+                                </select>
+                                <label for="column">Column</label>
+                                <select name="column" id="option-column">
+                                    <option value="-" class="column-option">-</option>
+                                </select>
+                            </div>
+                            <div>
+                                <h5>Dimension</h5>    
+                                <label for="width">Width</label>
+                                <input type="number" name="width" id="width-dimension">
+                                <label for="height">height</label>
+                                <input type="number" name="height" id="height-dimension">
+                            </div>
+                            <div>
+                                <h5>Position</h5>    
+                                <label for="x">X</label>
+                                <input type="number" name="x" id="x-position">
+                                <label for="y">Y</label>
+                                <input type="number" name="y" id="y-position">
+                            </div>
+
+                        </div>
+                        <!-- <div></div> -->
+
+                    </div>
+                </div>
+
             <button class="save-certificate">Save</button>
+
         </div>
 
         <?php
@@ -100,7 +121,7 @@
     add_action( 'admin_menu', 'pdfCert_menus' );
 
     function pdfCert_get_colunm_value() {
-        if ( ! check_ajax_referer( 'wp-job-order', 'security' ) ) {
+        if ( ! check_ajax_referer( 'pdfCert_certificate', 'security' ) ) {
             return wp_send_json_error( 'Invalid Nonce' );
         }
         if ( ! current_user_can( 'manage_options' ) ) {
@@ -125,6 +146,40 @@
         wp_send_json_success( $columns_names_json );
     }
     add_action( 'wp_ajax_get_colunm_value', 'pdfCert_get_colunm_value' );
+    
+    function pdfCert_save_certificate(){
+        // header("Content-Type: text/plain");
+        global $wpdb;
+        $certificate_table = $wpdb->prefix . 'certificate';
+        $certificate_title = $_POST['certificateTitle'];
+        // $save_data = json_decode(stripslashes($_POST['value']));
+        $sql = "INSERT INTO $certificate_table( title ) VALUES( %s )";
+        $wpdb->query( $wpdb->prepare( $sql, $save_data) );
+        
+        $sql = "SELECT id_certificate FROM $certificate_table WHERE title=%s";
+        $certificate_ids = $wpdb->get_results($wpdb->prepare( $sql , $certificate_title ));
+        $certificate_id = $certificate_ids[0]->id_certificate;
+        
+        $certificate_data_table = $wpdb->prefix . 'certificate_content';
+        $certificate_data = $_POST['certificateData'];
+        $sql2 = "INSERT INTO $certificate_data_table( id_certificate, x_position, height, width, y_position, column_content, table_content, type_content  ) VALUES( %d, %d, %d, %d, %d, %s, %s, %s )";
+        foreach($certificate_data as $data){
+            $arg = array(
+                $certificate_id, 
+                $data['xPosition'], 
+                $data['heightDimension'],
+                $data['widthDimension'],
+                $data['yPosition'], 
+                $data['optionColumn'],
+                $data['optionTable'],
+                $data['optionType']
+            );
+            $wpdb->query( $wpdb->prepare( $sql2, $arg) );
+        }
+        wp_send_json_success( $certificate_id[0]->id_certificate );
 
+    }
 
-?>
+    add_action( 'wp_ajax_save_certificate', 'pdfCert_save_certificate');
+    
+    ?>

@@ -16,10 +16,11 @@ defined( 'ABSPATH' ) or die( 'Cannot access pages directly.' );
         global $pagenow, $typenow;
 
         if($pagenow == 'admin.php'){
-            wp_enqueue_script( 'column-content-js', plugins_url( 'admin/js/column-content.js', __FILE__ ), array('jquery'), '20150626',  true );
+            wp_enqueue_script( 'column-content-js', plugins_url( 'admin/js/column-content.js', __FILE__ ), array('jquery'), '1.0.0',  true );
+            wp_enqueue_script( 'save-certificate-js', plugins_url( 'admin/js/save-certificate.js', __FILE__ ), array('jquery'), '1.0.0',  true );
             // wp_localize_script( 'column-content-js', 'ajax_object', array( 'ajax_url' => plugins_url( 'admin/admin-ajax.php' ) ) );
             wp_localize_script( 'column-content-js', 'column_comprobation', array(
-                'security' => wp_create_nonce( 'wp-job-order' ),
+                'security' => wp_create_nonce( 'pdfCert_certificate' ),
                 'success' => __( 'Jobs sort order has been saved.' ),
                 'failure' => __( 'There was an error saving the sort order, or you do not have proper permissions.' )
             ) );
