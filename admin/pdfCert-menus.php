@@ -66,6 +66,7 @@
                         <label for="certificate-title">Title</label>
                         <input type="text" name="certificate-title">
                         <button>Add Content</button>
+                        <button id="certificate-preview">Preview</button>
 
                     </div>
 
@@ -75,7 +76,8 @@
                                 <label for="type">Type</label>
                                 <select name="type" id="option-type">
                                     <option value="-">-</option>
-                                    <option value="text">Text</option>
+                                    <option value="Custom text">Custom text</option>
+                                    <option value="database">Database field</option>
                                     <option value="image">Image</option>
                                 </select>
                                 <label for="table">Table</label>

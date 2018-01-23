@@ -18,6 +18,9 @@ defined( 'ABSPATH' ) or die( 'Cannot access pages directly.' );
         if($pagenow == 'admin.php'){
             wp_enqueue_script( 'column-content-js', plugins_url( 'admin/js/column-content.js', __FILE__ ), array('jquery'), '1.0.0',  true );
             wp_enqueue_script( 'save-certificate-js', plugins_url( 'admin/js/save-certificate.js', __FILE__ ), array('jquery'), '1.0.0',  true );
+            wp_register_script( 'pdf-make-library-js', plugins_url( 'admin/library/pdfmake.min.js', __FILE__ ), array(), '1.0.0',  true );
+            wp_register_script( 'pdf-vfs-fonts-js', plugins_url( 'admin/library/vfs_fonts.js', __FILE__ ), array(), '1.0.0',  true );
+            wp_enqueue_script( 'certificate-preview-js', plugins_url( 'admin/js/certificate-preview.js', __FILE__ ), array('pdf-make-library-js', 'pdf-vfs-fonts-js'), '1.0.0',  true );
             // wp_localize_script( 'column-content-js', 'ajax_object', array( 'ajax_url' => plugins_url( 'admin/admin-ajax.php' ) ) );
             wp_localize_script( 'column-content-js', 'column_comprobation', array(
                 'security' => wp_create_nonce( 'pdfCert_certificate' ),
