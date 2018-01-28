@@ -33,7 +33,7 @@ jQuery(document).ready(($) => {
         var certificateJsonData = {
             // action : 'save_certificate',
             certificateTitle : certificateHtmlData[0].children[0].children["certificate-title"].value,
-            security: save_comprobation.security
+            // security: save_comprobation.security
         }
 
         certificateChildrenData.forEach(element => {
@@ -91,24 +91,28 @@ jQuery(document).ready(($) => {
 
     function getBase64Image(uri) {
         // Create an empty canvas element
-        var img = new Image();
+        let img = new Image();
         img.src = uri;
-        var canvas = document.createElement("canvas");
+        let canvas = document.createElement("canvas");
         canvas.width = img.width;
         canvas.height = img.height;
     
         // Copy the image contents to the canvas
-        var ctx = canvas.getContext("2d");
+        let ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0);
     
         // Get the data-URL formatted image
         // Firefox supports PNG and JPEG. You could check img.src to
         // guess the original format, but be aware the using "image/jpg"
         // will re-encode the image.
+        let dataURL;
         if( uri.indexOf(".png") ){
-            var dataURL = canvas.toDataURL("image/png");
+            dataURL = canvas.toDataURL("image/png");
+            console.log(dataURL);
         }else if( uri.indexOf(".jpg") ){
-            var dataURL = canvas.toDataURL("image/jpg");
+            dataURL = canvas.toDataURL("image/jpg");
+            console.log(dataURL);
+
         }
 
         return dataURL;

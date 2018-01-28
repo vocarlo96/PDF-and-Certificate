@@ -1,9 +1,9 @@
 jQuery(document).ready(function($) {
-    var tableOption = $('#option-table'); 
     var pageTitle = $('div h1');
-    $( "#option-table" ).change(function() {
+    $( 'body' ).on('change', 'select#option-table', function( event ) {
         // console.log(tableOption.value);
-        let tableValue = tableOption.val().toString();
+        console.log( event.currentTarget.value );
+        let tableValue = event.currentTarget.value;
         console.log(tableValue);
         $.ajax({
             url: ajaxurl,

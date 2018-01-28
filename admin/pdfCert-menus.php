@@ -75,35 +75,10 @@
                             <div>
                                 <label for="type">Type</label>
                                 <select name="type" id="option-type">
-                                    <option value="-">-</option>
+                                    <option value="-" selected="true">-</option>
                                     <option value="Custom text">Custom text</option>
                                     <option value="database">Database field</option>
                                     <option value="image">Image</option>
-                                </select>
-                                <label for="table">Table</label>
-                                <select name="table" id="option-table">
-                                    <option value="-">-</option>
-                                    <?php
-                                        
-                                        $sql = "SHOW TABLES";
-                                        $results = $wpdb->get_results($sql);
-                                        if($results){
-                                            foreach($results as $index => $value) {
-                                                foreach($value as $tableName) {
-                                                    echo '<option value="';
-                                                    echo esc_attr( $tableName );
-                                                    echo '">';
-                                                    echo esc_html( $tableName );
-                                                    echo '</option>';        
-                                                }
-                                            }
-                                        }
-
-                                    ?>
-                                </select>
-                                <label for="column">Column</label>
-                                <select name="column" id="option-column">
-                                    <option value="-" class="column-option">-</option>
                                 </select>
                             </div>
                             <div>
@@ -153,8 +128,8 @@
         $columns_name = $wpdb->get_results($sql);
         $columns_names = array();
         foreach($columns_name as $index => $value) {
-            foreach($value as $tableName) {
-                array_push($columns_names, $tableName);                
+            foreach($value as $columnName) {
+                array_push($columns_names, $columnName);                
             }
         }
 
@@ -205,5 +180,45 @@
     }
 
     add_action( 'wp_ajax_save_certificate', 'pdfCert_save_certificate');
+
+    function pdfCert_option_type(){
+        global $wpdb;
+        $option_data = $_POST['value'];
+
+        switch($option_data){
+            
+            case "Custom text":
+                break;
+            
+            case "database":
+                $sql = "SHOW TABLES";
+                $results = $wpdb->get_results($sql);
+                $tables_names = array($option_data);
+                if($results){
+                    foreach($results as $index => $value) {
+                        foreach($value as $tableName) {
+                            array_push($tables_names, $tableName);        
+                        }
+                    }
+                }
+                $tables_names_json = json_encode($tables_names);
+                wp_send_json_success( $tables_names_json);
+                // add_action( 'admin_enqueue_scripts', 'algo');
+                break;
+            
+            case "image":
+                break;
+            
+        }
+
+
+        wp_send_json_success( $option_data );
+    }
+
+    add_action( 'wp_ajax_option_type', 'pdfCert_option_type');
+
+    // function algo(){
+    //     wp_enqueue_script( 'column-content-js', plugins_url( 'admin/js/column-content.js', __FILE__ ), array('jquery'), '1.0.0',  true );
+    // }
     
     ?>
