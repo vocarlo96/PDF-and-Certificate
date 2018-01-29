@@ -11,6 +11,7 @@ defined( 'ABSPATH' ) or die( 'Cannot access pages directly.' );
     
     require_once( plugin_dir_path( __FILE__ ) . 'admin/pdfCert-database.php' );
     require_once( plugin_dir_path( __FILE__ ) . 'admin/pdfCert-menus.php' );
+    require_once( plugin_dir_path( __FILE__ ) . 'includes/pdfCert-generate-certificate-shortcode.php' );
 
     function pdfCert_enqueue_scripts(){
         global $pagenow, $typenow;
