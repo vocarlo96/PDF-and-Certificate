@@ -37,7 +37,8 @@ jQuery(document).ready(($) => {
                     certificateJsonData.certificateData.push({
                         optionType: element.children[0].children["type"].value,
                         optionTable: element.children[0].children["option-table"].value,
-                        optionColumn: element.children[0].children["option-column"].value,
+                        optionColumn: element.children[0].children["column"].value,
+                        optionValue: element.children[0].children["column-value"].value,
                         // widthDimension: element.children[1].children["width-dimension"].value,
                         // heightDimension: element.children[1].children["height-dimension"].value,
                         xPosition: element.children[2].children["x-position"].value,

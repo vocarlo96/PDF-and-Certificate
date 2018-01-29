@@ -14,20 +14,22 @@ defined( 'ABSPATH' ) or die( 'Cannot access pages directly.' );
     require_once( plugin_dir_path( __FILE__ ) . 'includes/pdfCert-generate-certificate-shortcode.php' );
     require_once( plugin_dir_path( __FILE__ ) . 'includes/pdfCert-validate-certificate-shortcode.php' );
 
-    function pdfCert_enqueue_scripts(){
+    function pdfCert_admin_enqueue_scripts(){
         global $pagenow, $typenow;
-
-        if($pagenow == 'admin.php'){
+        
+        if(current_user_can('manage_options') && $pagenow == 'admin.php'){
             wp_enqueue_script( 'option-type-js', plugins_url( 'admin/js/option-type.js', __FILE__ ), array('jquery'), '1.0.0',  true );
+            wp_enqueue_script( 'table-content-js', plugins_url( 'admin/js/table-content.js', __FILE__ ), array('jquery'), '1.0.0',  true );
             wp_enqueue_script( 'column-content-js', plugins_url( 'admin/js/column-content.js', __FILE__ ), array('jquery'), '1.0.0',  true );
             wp_enqueue_script( 'save-certificate-js', plugins_url( 'admin/js/save-certificate.js', __FILE__ ), array('jquery'), '1.0.0',  true );
             wp_enqueue_script( 'add-more-js', plugins_url( 'admin/js/add-more.js', __FILE__ ), array('jquery'), '1.0.0',  true );
-           
+            
             wp_register_script( 'pdf-make-library-js', plugins_url( 'admin/library/pdfmake.min.js', __FILE__ ), array(), '1.0.0',  true );
             wp_register_script( 'pdf-vfs-fonts-js', plugins_url( 'admin/library/vfs_fonts.js', __FILE__ ), array(), '1.0.0',  true );
-            wp_enqueue_script( 'certificate-preview-js', plugins_url( 'admin/js/certificate-preview.js', __FILE__ ), array('pdf-make-library-js', 'pdf-vfs-fonts-js'), '1.0.0',  true );
-            // wp_localize_script( 'column-content-js', 'ajax_object', array( 'ajax_url' => plugins_url( 'admin/admin-ajax.php' ) ) );
-            wp_localize_script( 'column-content-js', 'column_comprobation', array(
+            // wp_enqueue_script( 'generate-certificate-js', plugins_url( 'includes/js/generate-certificate.js', __FILE__ ), array('jquery', 'pdf-make-library-js', 'pdf-vfs-fonts-js'), '1.0.0',  true );
+            wp_enqueue_script( 'certificate-preview-js', plugins_url( 'admin/js/certificate-preview.js', __FILE__ ), array('jquery', 'pdf-make-library-js', 'pdf-vfs-fonts-js'), '1.0.0',  true );
+            // wp_localize_script( 'table-content-js', 'ajax_object', array( 'ajax_url' => plugins_url( 'admin/admin-ajax.php' ) ) );
+            wp_localize_script( 'table-content-js', 'table_comprobation', array(
                 'security' => wp_create_nonce( 'pdfCert_certificate' ),
                 // 'success' => __( 'Jobs sort order has been saved.' ),
                 // 'failure' => __( 'There was an error saving the sort order, or you do not have proper permissions.' )
@@ -41,6 +43,20 @@ defined( 'ABSPATH' ) or die( 'Cannot access pages directly.' );
         }
     }
 
-    add_action( 'admin_enqueue_scripts', 'pdfCert_enqueue_scripts');
+    add_action( 'admin_enqueue_scripts', 'pdfCert_admin_enqueue_scripts');
+
+    function pdfCert_users_enqueue_scripts(){
+        global $pagenow, $typenow;
+
+        if( is_user_logged_in() && $pagenow == 'index.php' ){
+            wp_register_script( 'pdf-make-library-js', plugins_url( 'admin/library/pdfmake.min.js', __FILE__ ), array(), '1.0.0',  true );
+            wp_register_script( 'pdf-vfs-fonts-js', plugins_url( 'admin/library/vfs_fonts.js', __FILE__ ), array(), '1.0.0',  true );
+            wp_enqueue_script( 'generate-certificate-js', plugins_url( 'includes/js/generate-certificate.js', __FILE__ ), array('jquery', 'pdf-make-library-js', 'pdf-vfs-fonts-js'), '1.0.0',  true );
+            wp_localize_script( 'generate-certificate-js', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' )) );
+        }
+
+    }
+
+    add_action( 'wp_enqueue_scripts', 'pdfCert_users_enqueue_scripts');
 
 ?>

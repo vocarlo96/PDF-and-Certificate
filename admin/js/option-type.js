@@ -39,7 +39,7 @@ jQuery(document).ready( ($)=>{
                                     optionHtml += '<option value="' + element + '">' + element + '</option>';
                                 });
                                 optionHtml += '</select>';
-                                optionHtml += '<label for="column">Column</label> <select name="column" id="option-column"> <option value="-" class="column-option">-</option> </select>';
+                                optionHtml += '<label for="column">Column</label> <select name="column" class="option-column"> <option value="-" class="column-option">-</option> </select>';
                                 // console.log("database siiiiii");
                                 optionType.after( optionHtml );
                                 break;

@@ -24,6 +24,7 @@
             width INT(3),
             column_content VARCHAR(30),
             table_content VARCHAR(500),
+            data_value VARCHAR(150),
             custom_text VARCHAR(150),
             type_content VARCHAR(30) NOT NULL,
             PRIMARY KEY  (id_content),

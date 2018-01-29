@@ -1,41 +1,35 @@
-jQuery(document).ready(function($) {
-    var pageTitle = $('div h1');
-    $( 'body' ).on('change', 'select#option-table', function( event ) {
-        // console.log(tableOption.value);
-        console.log( event.currentTarget.value );
-        let tableValue = event.currentTarget.value;
-        console.log(tableValue);
+jQuery(document).ready( ($)=>{
+    
+    $('body').on('change', '.option-column', function(event){
+        console.log(event.currentTarget.previousElementSibling.previousElementSibling.value);
+
+        let valueColumnData = {
+            action: 'value_column',
+            valueTable: event.currentTarget.previousElementSibling.previousElementSibling.value,
+            valueColumn: event.currentTarget.value
+        };
+
         $.ajax({
             url: ajaxurl,
             type: 'POST',
             dataType: 'json',
-            data: {
-                action: 'get_colunm_value',
-                value: tableValue,
-                security: column_comprobation.security
+            data: valueColumnData,
+            success: function(response){
+                $(event.currentTarget).nextAll().remove();
+                console.log(response);
+                let columnValue = '<label for="column-value">valor</label> <select name="column-value" id="column-value"> <option value="-">-</option>';
+                response.data.forEach(element => {
+                    columnValue += '<option value="' + element + '">' + element + '</option>'
+                });
+                columnValue += '</select>';
+                $(event.currentTarget).after(columnValue);
             },
-            success: function( response ) {
-                $( 'div#message' ).remove();
-                if( true === response.success ) {
-                    console.log(response.data);
-                    var columsArray = response.data.replace(/(\[|\]|,|\")/g," ").trim().split(/ +/g);
-                    console.log(columsArray);
-                    var columnsOptions = "";
-                    columsArray.forEach(element => {
-                        columnsOptions += "<option value=" + element + ">" + element + "</option>";
-                    });
-                    console.log(columnsOptions);
-                    $( '#option-column .column-option' ).after( columnsOptions );
-                } else {
-                    pageTitle.after( '<div id="message" class="error"><p> 1</p></div>' );
-                }
-                
-                
-            },
-            error: function( error ) {
-                $( 'div#message' ).remove();
-                pageTitle.after( '<div id="message" class="error"><p>2</p></div>' );
+            error: function(error){
+                console.log(error);
             }
         });
-    });
+
+
+    })
+
 });

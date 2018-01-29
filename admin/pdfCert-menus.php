@@ -71,7 +71,7 @@
                     </div>
 
                     <div class="certificate-content-wrap">
-                        <div class="certificate-single-content">
+                        <div id="certificate-single-content">
                             <div>
                                 <label for="type">Type</label>
                                 <select name="type" class="option-type">
@@ -178,13 +178,14 @@
                     break;
 
                 case 'database':
-                    $sql2 = "INSERT INTO $certificate_data_table( id_certificate, x_position, y_position, column_content, table_content, type_content  ) VALUES( %d, %d, %d, %s, %s, %s )";
+                    $sql2 = "INSERT INTO $certificate_data_table( id_certificate, x_position, y_position, column_content, table_content, data_value, type_content  ) VALUES( %d, %d, %d, %s, %s, %s, %s )";
                     $arg = array(
                         $certificate_id, 
                         $data['xPosition'], 
                         $data['yPosition'], 
                         $data['optionColumn'],
                         $data['optionTable'],
+                        $data['optionValue'],
                         $data['optionType']
                     );
                     $wpdb->query( $wpdb->prepare( $sql2, $arg) );
@@ -237,6 +238,29 @@
     }
 
     add_action( 'wp_ajax_option_type', 'pdfCert_option_type');
+
+
+    function pdfCert_value_column(){
+        global $wpdb;
+        $value_table_data = $_POST['valueTable'];
+        $value_column_data = $_POST['valueColumn'];
+
+        $sql = "SELECT $value_column_data FROM $value_table_data";
+
+        $value_column_results = $wpdb->get_results($sql);
+
+        $value_column = array();
+        foreach($value_column_results as $index => $value) {
+            foreach($value as $columnValue) {
+                array_push($value_column, $columnValue);                
+            }
+        }
+
+        wp_send_json_success( $value_column );
+
+    }
+
+    add_action( 'wp_ajax_value_column', 'pdfCert_value_column' );
 
     // function algo(){
     //     wp_enqueue_script( 'column-content-js', plugins_url( 'admin/js/column-content.js', __FILE__ ), array('jquery'), '1.0.0',  true );

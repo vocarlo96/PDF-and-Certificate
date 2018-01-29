@@ -69,7 +69,7 @@ jQuery(document).ready(($) => {
                 case "database":
                     console.log("database");
                     let contentDatabase = {
-                        text: element.children[0].children["option-column"].value.toString(),
+                        text: element.children[0].children["column-value"].value.toString(),
                         absolutePosition:{
                             x : parseInt(element.children[2].children["x-position"].value),
                             y : parseInt(element.children[2].children["y-position"].value)
