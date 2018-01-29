@@ -19,12 +19,12 @@ jQuery(document).ready(($) => {
 
         certificateChildrenData.forEach(element => {
 
-            switch(element.children[0].children["option-type"].value){
+            switch(element.children[0].children["type"].value){
                 // Eliminar las dimensiones en los campos de texto puesto a aque estos son innecesarios aca 
 
                 case "Custom text":
                     certificateJsonData.certificateData.push({
-                        optionType: element.children[0].children["option-type"].value,
+                        optionType: element.children[0].children["type"].value,
                         customText: element.children[0].children["custom-text"].value,
                         // widthDimension: element.children[1].children["width-dimension"].value,
                         // heightDimension: element.children[1].children["height-dimension"].value,
@@ -35,7 +35,7 @@ jQuery(document).ready(($) => {
 
                 case "database":
                     certificateJsonData.certificateData.push({
-                        optionType: element.children[0].children["option-type"].value,
+                        optionType: element.children[0].children["type"].value,
                         optionTable: element.children[0].children["option-table"].value,
                         optionColumn: element.children[0].children["option-column"].value,
                         // widthDimension: element.children[1].children["width-dimension"].value,
@@ -50,7 +50,7 @@ jQuery(document).ready(($) => {
 
             }
 
-            console.log(element.children[0].children["option-type"].value);
+            console.log(element.children[0].children["type"].value);
             // console.log(element.children[0].children["option-table"].value);
             // console.log(element.children[0].children["option-column"].value);
             // console.log(element.children[1].children["width-dimension"].value);

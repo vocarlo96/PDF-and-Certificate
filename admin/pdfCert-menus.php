@@ -65,16 +65,16 @@
                     <div>
                         <label for="certificate-title">Title</label>
                         <input type="text" name="certificate-title">
-                        <button>Add Content</button>
+                        <button id="add-more">Add Content</button>
                         <button id="certificate-preview">Preview</button>
 
                     </div>
 
-                    <div>
-                        <div>
+                    <div class="certificate-content-wrap">
+                        <div class="certificate-single-content">
                             <div>
                                 <label for="type">Type</label>
-                                <select name="type" id="option-type">
+                                <select name="type" class="option-type">
                                     <option value="-" selected="true">-</option>
                                     <option value="Custom text">Custom text</option>
                                     <option value="database">Database field</option>

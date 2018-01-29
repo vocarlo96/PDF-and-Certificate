@@ -3,6 +3,10 @@ jQuery(document).ready(($) => {
     $('#certificate-preview').click(() => {
         alert("entrio");
 
+        let image1 = getBase64Image("http://localhost/luz/wp-content/uploads/2017/11/top_image-ptu-1.jpg");
+        let image2 = getBase64Image("http://localhost/luz/wp-content/uploads/2017/12/envelope4-green.png");
+
+
         var dd = {
             content: [
                 {
@@ -10,10 +14,10 @@ jQuery(document).ready(($) => {
                     absolutePosition: {x:100, y:180}
                 },
                 {
-                    image: getBase64Image("http://localhost/luz/wp-content/uploads/2017/11/top_image-ptu-1.jpg")
+                    image: image1
                 },
                 {
-                    image: getBase64Image("http://localhost/luz/wp-content/uploads/2017/12/envelope4-green.png")
+                    image: image2
                 }
             ]
             
@@ -38,7 +42,7 @@ jQuery(document).ready(($) => {
 
         certificateChildrenData.forEach(element => {
 
-            console.log(element.children[0].children["option-type"].value);
+            console.log(element.children[0].children["type"].value);
             // console.log(element.children[0].children["option-table"].value);
             // console.log(element.children[0].children["option-column"].value);
             // console.log(element.children[1].children["width-dimension"].value);
@@ -47,7 +51,7 @@ jQuery(document).ready(($) => {
             // console.log(element.children[2].children["y-position"].value);
             // console.log(certificateJsonData);
 
-            switch(element.children[0].children["option-type"].value){
+            switch(element.children[0].children["type"].value){
 
                 case "Custom text":
                     console.log("text");
@@ -100,8 +104,10 @@ jQuery(document).ready(($) => {
 
     function getBase64Image(uri) {
         // Create an empty canvas element
+        console.log(uri);
         let img = new Image();
         img.src = uri;
+        console.log(img.src)
         let canvas = document.createElement("canvas");
         canvas.width = img.width;
         canvas.height = img.height;

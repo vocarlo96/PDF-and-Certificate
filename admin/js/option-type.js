@@ -1,7 +1,10 @@
 jQuery(document).ready( ($)=>{
 
-    $('#option-type').change( ()=>{
-        let optionType = $('#option-type');
+    $('.option-type').change( (event)=>{
+        console.log(this);
+        console.log(event);
+        let optionType = $(event.currentTarget);
+        // let optionType = $(this);
         let optionTypeValue = optionType.val();
         console.log(optionType);
 
