@@ -18,24 +18,47 @@ jQuery(document).ready(($) => {
         }
 
         certificateChildrenData.forEach(element => {
-            certificateJsonData.certificateData.push({
-                optionType: element.children[0].children["option-type"].value,
-                optionTable: element.children[0].children["option-table"].value,
-                optionColumn: element.children[0].children["option-column"].value,
-                widthDimension: element.children[1].children["width-dimension"].value,
-                heightDimension: element.children[1].children["height-dimension"].value,
-                xPosition: element.children[2].children["x-position"].value,
-                yPosition: element.children[2].children["y-position"].value
-            });
+
+            switch(element.children[0].children["option-type"].value){
+                // Eliminar las dimensiones en los campos de texto puesto a aque estos son innecesarios aca 
+
+                case "Custom text":
+                    certificateJsonData.certificateData.push({
+                        optionType: element.children[0].children["option-type"].value,
+                        customText: element.children[0].children["custom-text"].value,
+                        // widthDimension: element.children[1].children["width-dimension"].value,
+                        // heightDimension: element.children[1].children["height-dimension"].value,
+                        xPosition: element.children[2].children["x-position"].value,
+                        yPosition: element.children[2].children["y-position"].value
+                    });
+                    break;
+
+                case "database":
+                    certificateJsonData.certificateData.push({
+                        optionType: element.children[0].children["option-type"].value,
+                        optionTable: element.children[0].children["option-table"].value,
+                        optionColumn: element.children[0].children["option-column"].value,
+                        // widthDimension: element.children[1].children["width-dimension"].value,
+                        // heightDimension: element.children[1].children["height-dimension"].value,
+                        xPosition: element.children[2].children["x-position"].value,
+                        yPosition: element.children[2].children["y-position"].value
+                    });
+                    break;
+
+                case "image":
+                    break;
+
+            }
+
             console.log(element.children[0].children["option-type"].value);
-            console.log(element.children[0].children["option-table"].value);
-            console.log(element.children[0].children["option-column"].value);
-            console.log(element.children[1].children["width-dimension"].value);
-            console.log(element.children[1].children["height-dimension"].value);
-            console.log(element.children[2].children["x-position"].value);
-            console.log(element.children[2].children["y-position"].value);
-            console.log(certificateJsonData);
-            console.log(JSON.stringify(certificateJsonData));
+            // console.log(element.children[0].children["option-table"].value);
+            // console.log(element.children[0].children["option-column"].value);
+            // console.log(element.children[1].children["width-dimension"].value);
+            // console.log(element.children[1].children["height-dimension"].value);
+            // console.log(element.children[2].children["x-position"].value);
+            // console.log(element.children[2].children["y-position"].value);
+            // console.log(certificateJsonData);
+            // console.log(JSON.stringify(certificateJsonData));
         });
 
         $.ajax({

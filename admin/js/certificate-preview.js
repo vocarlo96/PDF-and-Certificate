@@ -39,30 +39,39 @@ jQuery(document).ready(($) => {
         certificateChildrenData.forEach(element => {
 
             console.log(element.children[0].children["option-type"].value);
-            console.log(element.children[0].children["option-table"].value);
-            console.log(element.children[0].children["option-column"].value);
-            console.log(element.children[1].children["width-dimension"].value);
-            console.log(element.children[1].children["height-dimension"].value);
-            console.log(element.children[2].children["x-position"].value);
-            console.log(element.children[2].children["y-position"].value);
+            // console.log(element.children[0].children["option-table"].value);
+            // console.log(element.children[0].children["option-column"].value);
+            // console.log(element.children[1].children["width-dimension"].value);
+            // console.log(element.children[1].children["height-dimension"].value);
+            // console.log(element.children[2].children["x-position"].value);
+            // console.log(element.children[2].children["y-position"].value);
             // console.log(certificateJsonData);
 
             switch(element.children[0].children["option-type"].value){
 
                 case "Custom text":
                     console.log("text");
+                    let contentCustomText = {
+                        text: element.children[0].children["custom-text"].value.toString(),
+                        absolutePosition:{
+                            x : parseInt(element.children[2].children["x-position"].value),
+                            y : parseInt(element.children[2].children["y-position"].value)
+                        }
+                    };
+                    dd.content.push(contentCustomText);
+                    console.log(dd.content);
                     break;
 
                 case "database":
                     console.log("database");
-                    let content_database = {
+                    let contentDatabase = {
                         text: element.children[0].children["option-column"].value.toString(),
                         absolutePosition:{
                             x : parseInt(element.children[2].children["x-position"].value),
                             y : parseInt(element.children[2].children["y-position"].value)
                         }
                     };
-                    dd.content.push(content_database);
+                    dd.content.push(contentDatabase);
                     console.log(dd.content);
                     break;
 

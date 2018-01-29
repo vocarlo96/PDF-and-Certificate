@@ -161,19 +161,40 @@
         
         $certificate_data_table = $wpdb->prefix . 'certificate_content';
         $certificate_data = $_POST['certificateData'];
-        $sql2 = "INSERT INTO $certificate_data_table( id_certificate, x_position, height, width, y_position, column_content, table_content, type_content  ) VALUES( %d, %d, %d, %d, %d, %s, %s, %s )";
         foreach($certificate_data as $data){
-            $arg = array(
-                $certificate_id, 
-                $data['xPosition'], 
-                $data['heightDimension'],
-                $data['widthDimension'],
-                $data['yPosition'], 
-                $data['optionColumn'],
-                $data['optionTable'],
-                $data['optionType']
-            );
-            $wpdb->query( $wpdb->prepare( $sql2, $arg) );
+
+            switch( $data['optionType'] ){
+                
+                case 'Custom text':
+                    $sql2 = "INSERT INTO $certificate_data_table( id_certificate, x_position, y_position, custom_text, type_content  ) VALUES( %d, %d, %d, %s, %s )";
+                    $arg = array(
+                        $certificate_id, 
+                        $data['xPosition'], 
+                        $data['yPosition'], 
+                        $data['customText'],
+                        $data['optionType']
+                    );
+                    $wpdb->query( $wpdb->prepare( $sql2, $arg) );
+                    break;
+
+                case 'database':
+                    $sql2 = "INSERT INTO $certificate_data_table( id_certificate, x_position, y_position, column_content, table_content, type_content  ) VALUES( %d, %d, %d, %s, %s, %s )";
+                    $arg = array(
+                        $certificate_id, 
+                        $data['xPosition'], 
+                        $data['yPosition'], 
+                        $data['optionColumn'],
+                        $data['optionTable'],
+                        $data['optionType']
+                    );
+                    $wpdb->query( $wpdb->prepare( $sql2, $arg) );
+                    break;
+
+                case 'image':
+                    break;
+
+            }
+
         }
         wp_send_json_success( $certificate_id[0]->id_certificate );
 

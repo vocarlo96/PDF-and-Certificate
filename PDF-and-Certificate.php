@@ -16,9 +16,9 @@ defined( 'ABSPATH' ) or die( 'Cannot access pages directly.' );
         global $pagenow, $typenow;
 
         if($pagenow == 'admin.php'){
+            wp_enqueue_script( 'option-type-js', plugins_url( 'admin/js/option-type.js', __FILE__ ), array('jquery'), '1.0.0',  true );
             wp_enqueue_script( 'column-content-js', plugins_url( 'admin/js/column-content.js', __FILE__ ), array('jquery'), '1.0.0',  true );
             wp_enqueue_script( 'save-certificate-js', plugins_url( 'admin/js/save-certificate.js', __FILE__ ), array('jquery'), '1.0.0',  true );
-            wp_enqueue_script( 'option-type-js', plugins_url( 'admin/js/option-type.js', __FILE__ ), array('jquery'), '1.0.0',  true );
             wp_register_script( 'pdf-make-library-js', plugins_url( 'admin/library/pdfmake.min.js', __FILE__ ), array(), '1.0.0',  true );
             wp_register_script( 'pdf-vfs-fonts-js', plugins_url( 'admin/library/vfs_fonts.js', __FILE__ ), array(), '1.0.0',  true );
             wp_enqueue_script( 'certificate-preview-js', plugins_url( 'admin/js/certificate-preview.js', __FILE__ ), array('pdf-make-library-js', 'pdf-vfs-fonts-js'), '1.0.0',  true );
