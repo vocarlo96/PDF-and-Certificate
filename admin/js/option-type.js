@@ -11,8 +11,8 @@ jQuery(document).ready( ($)=>{
         switch(optionTypeValue){
             case "Custom text":
                 optionType.nextAll().remove();
-                let optionHtml = '<label for="text">Texto</label><input type="text" name="text" id="custom-text">';
-                optionType.after( optionHtml );
+                let optionTextHtml = '<label for="text">Texto</label><input type="text" name="text" id="custom-text">';
+                optionType.after( optionTextHtml );
                 break;
 
             case "database":
@@ -56,6 +56,11 @@ jQuery(document).ready( ($)=>{
                 break;
                 
             case "image":
+                optionType.nextAll().remove();
+                let optionImageHtml = '<button class="add-certificate-image">Seleccionar imagen</button><button class="delete-certificate-image">Borrar imagen</button><img id="certificate-image" src=""/><input id="certificate-image-data" type="hidden">';
+                optionType.after( optionImageHtml );
+                let dimensionHtml = '<div><h5>Dimension</h5><label for="width">Width</label><input type="number" name="width" id="width-dimension"> <label for="height">height</label><input type="number" name="height" id="height-dimension"></div> ';
+                $('#options-wrap').after( dimensionHtml );
                 break;
         }
 

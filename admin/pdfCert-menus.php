@@ -72,7 +72,7 @@
 
                     <div class="certificate-content-wrap">
                         <div id="certificate-single-content">
-                            <div>
+                            <div id="options-wrap">
                                 <label for="type">Type</label>
                                 <select name="type" class="option-type">
                                     <option value="-" selected="true">-</option>
@@ -81,13 +81,13 @@
                                     <option value="image">Image</option>
                                 </select>
                             </div>
-                            <div>
+                            <!-- <div>
                                 <h5>Dimension</h5>    
                                 <label for="width">Width</label>
                                 <input type="number" name="width" id="width-dimension">
                                 <label for="height">height</label>
                                 <input type="number" name="height" id="height-dimension">
-                            </div>
+                            </div> -->
                             <div>
                                 <h5>Position</h5>    
                                 <label for="x">X</label>
@@ -192,6 +192,17 @@
                     break;
 
                 case 'image':
+                    $sql2 = "INSERT INTO $certificate_data_table( id_certificate, x_position, y_position, height, width, data_value, type_content  ) VALUES( %d, %d, %d, %d, %d, %s, %s )";
+                    $arg = array(
+                        $certificate_id, 
+                        $data['xPosition'], 
+                        $data['yPosition'], 
+                        $data['widthDimension'],
+                        $data['heightDimension'],
+                        $data['imageUrl'],
+                        $data['optionType']
+                    );
+                    $wpdb->query( $wpdb->prepare( $sql2, $arg) );
                     break;
 
             }

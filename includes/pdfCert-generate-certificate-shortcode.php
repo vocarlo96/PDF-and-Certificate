@@ -59,6 +59,7 @@
                     break;
 
                 case 'image':
+                    array_push($certificate_data, array($value->type_content, $value->x_position, $value->y_position, $value->height, $value->width, $value->data_value));
                     break;
 
             }

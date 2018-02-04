@@ -28,8 +28,8 @@ jQuery(document).ready(($) => {
                         customText: element.children[0].children["custom-text"].value,
                         // widthDimension: element.children[1].children["width-dimension"].value,
                         // heightDimension: element.children[1].children["height-dimension"].value,
-                        xPosition: element.children[2].children["x-position"].value,
-                        yPosition: element.children[2].children["y-position"].value
+                        xPosition: element.children[1].children["x-position"].value,
+                        yPosition: element.children[1].children["y-position"].value
                     });
                     break;
 
@@ -41,12 +41,21 @@ jQuery(document).ready(($) => {
                         optionValue: element.children[0].children["column-value"].value,
                         // widthDimension: element.children[1].children["width-dimension"].value,
                         // heightDimension: element.children[1].children["height-dimension"].value,
-                        xPosition: element.children[2].children["x-position"].value,
-                        yPosition: element.children[2].children["y-position"].value
+                        xPosition: element.children[1].children["x-position"].value,
+                        yPosition: element.children[1].children["y-position"].value
                     });
                     break;
 
                 case "image":
+                    let urlImagePreview = JSON.parse(element.children[0].children["certificate-image-data"].value.toString());
+                    certificateJsonData.certificateData.push({
+                        optionType: element.children[0].children["type"].value,
+                        imageUrl: urlImagePreview[0].url.toString(),
+                        widthDimension: element.children[1].children["width-dimension"].value,
+                        heightDimension: element.children[1].children["height-dimension"].value,
+                        xPosition: element.children[2].children["x-position"].value,
+                        yPosition: element.children[2].children["y-position"].value
+                    });
                     break;
 
             }

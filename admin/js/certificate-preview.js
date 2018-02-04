@@ -9,16 +9,16 @@ jQuery(document).ready(($) => {
 
         var dd = {
             content: [
-                {
-                    text:'esto es un texto demostrativo para el plugin',
-                    absolutePosition: {x:100, y:180}
-                },
-                {
-                    image: image1
-                },
-                {
-                    image: image2
-                }
+                // {
+                //     text:'esto es un texto demostrativo para el plugin',
+                //     absolutePosition: {x:100, y:180}
+                // },
+                // {
+                //     image: image1
+                // },
+                // {
+                //     image: image2
+                // }
             ]
             
         }
@@ -58,8 +58,8 @@ jQuery(document).ready(($) => {
                     let contentCustomText = {
                         text: element.children[0].children["custom-text"].value.toString(),
                         absolutePosition:{
-                            x : parseInt(element.children[2].children["x-position"].value),
-                            y : parseInt(element.children[2].children["y-position"].value)
+                            x : parseInt(element.children[1].children["x-position"].value),
+                            y : parseInt(element.children[1].children["y-position"].value)
                         }
                     };
                     dd.content.push(contentCustomText);
@@ -71,8 +71,8 @@ jQuery(document).ready(($) => {
                     let contentDatabase = {
                         text: element.children[0].children["column-value"].value.toString(),
                         absolutePosition:{
-                            x : parseInt(element.children[2].children["x-position"].value),
-                            y : parseInt(element.children[2].children["y-position"].value)
+                            x : parseInt(element.children[1].children["x-position"].value),
+                            y : parseInt(element.children[1].children["y-position"].value)
                         }
                     };
                     dd.content.push(contentDatabase);
@@ -81,24 +81,30 @@ jQuery(document).ready(($) => {
 
                 case "image":
                     console.log("image");
+                    // console.log(JSON.parse(element.children[0].children["certificate-image-data"].value.toString()));
+                    // console.log(element.children[1].children["width-dimension"]);
+                    // console.log(element.children[1].children["height-dimension"]);
+
+                    // console.log(element.children[2].children["x-position"]);
+                    // console.log(element.children[2].children["y-position"]);
+                    let urlImagePreview = JSON.parse(element.children[0].children["certificate-image-data"].value.toString());
+                    let dataUrl = getBase64Image(urlImagePreview[0].url.toString());
+                    let contentCustomImage = {
+                        image: dataUrl,
+                        width: parseInt(element.children[1].children["width-dimension"].value),
+			            height: parseInt(element.children[1].children["height-dimension"].value),
+                        absolutePosition:{
+                            x : parseInt(element.children[2].children["x-position"].value),
+                            y : parseInt(element.children[2].children["y-position"].value)
+                        }
+                    };
+                    dd.content.push(contentCustomImage);
+                    console.log(dd.content);
                     break;
             }
         });
         console.log(dd.content);
         pdfMake.createPdf(dd).download(certificateJsonData.certificateTitle.toString() + '.pdf');
-
-        // $.ajax({
-        //     url: ajaxurl,
-        //     type: 'POST',
-        //     dataType: 'json',
-        //     data : certificateJsonData,
-        //     success : function(response){
-        //         console.log("bien");
-        //     },
-        //     error: function(error){
-        //         console.log("mal");
-        //     }
-        // });
 
     });
 

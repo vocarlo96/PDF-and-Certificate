@@ -23,7 +23,7 @@ defined( 'ABSPATH' ) or die( 'Cannot access pages directly.' );
             wp_enqueue_script( 'column-content-js', plugins_url( 'admin/js/column-content.js', __FILE__ ), array('jquery'), '1.0.0',  true );
             wp_enqueue_script( 'save-certificate-js', plugins_url( 'admin/js/save-certificate.js', __FILE__ ), array('jquery'), '1.0.0',  true );
             wp_enqueue_script( 'add-more-js', plugins_url( 'admin/js/add-more.js', __FILE__ ), array('jquery'), '1.0.0',  true );
-            
+            wp_enqueue_script( 'media-certificate-picker-js', plugins_url( 'admin/js/media-certificate-picker.js', __FILE__ ), array('jquery', 'media-upload'), '1.0.0', true);
             wp_register_script( 'pdf-make-library-js', plugins_url( 'admin/library/pdfmake.min.js', __FILE__ ), array(), '1.0.0',  true );
             wp_register_script( 'pdf-vfs-fonts-js', plugins_url( 'admin/library/vfs_fonts.js', __FILE__ ), array(), '1.0.0',  true );
             // wp_enqueue_script( 'generate-certificate-js', plugins_url( 'includes/js/generate-certificate.js', __FILE__ ), array('jquery', 'pdf-make-library-js', 'pdf-vfs-fonts-js'), '1.0.0',  true );
