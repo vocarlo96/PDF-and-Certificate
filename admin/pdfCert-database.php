@@ -32,6 +32,19 @@
         ) $chartset_collate;";
 
         dbDelta( $sql );
+
+        $table_name3 = $wpdb->prefix . 'certificate_validate';
+
+        $sql = "CREATE TABLE $table_name3 (
+            id_validate INT NOT NULL AUTO_INCREMENT,
+            id_certificate INT NOT NULL,
+            id_user INT NOT NULL,
+            PRIMARY KEY  (id_validate),
+            FOREIGN KEY  (id_certificate) REFERENCES $table_name (id_certificate)
+        ) $chartset_collate;";
+
+        dbDelta( $sql );
+
     }
 
     register_activation_hook( __FILE__, 'pfdCert_database_init');

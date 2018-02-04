@@ -64,6 +64,12 @@
             }
         }
 
+        $current_user = wp_get_current_user();
+
+        $table_name = $wpdb->prefix . 'certificate_validate';
+        $sql = "INSERT INTO $table_name( id_certificate, id_user) VALUES( %d, %d )";
+        $wpdb->query($wpdb->prepare($sql, array($certificate_id, $current_user->ID)));
+
         wp_send_json_success( $certificate_data );
     }
 

@@ -53,6 +53,8 @@ defined( 'ABSPATH' ) or die( 'Cannot access pages directly.' );
             wp_register_script( 'pdf-vfs-fonts-js', plugins_url( 'admin/library/vfs_fonts.js', __FILE__ ), array(), '1.0.0',  true );
             wp_enqueue_script( 'generate-certificate-js', plugins_url( 'includes/js/generate-certificate.js', __FILE__ ), array('jquery', 'pdf-make-library-js', 'pdf-vfs-fonts-js'), '1.0.0',  true );
             wp_localize_script( 'generate-certificate-js', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' )) );
+            wp_enqueue_script( 'validate-certificate-js', plugins_url( 'includes/js/validate-certificate.js', __FILE__ ), array('jquery', 'pdf-make-library-js', 'pdf-vfs-fonts-js'), '1.0.0',  true );
+            wp_localize_script( 'validate-certificate-js', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' )) );
         }
 
     }
