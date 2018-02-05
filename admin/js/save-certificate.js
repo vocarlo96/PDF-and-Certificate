@@ -13,9 +13,29 @@ jQuery(document).ready(($) => {
         var certificateJsonData = {
             action : 'save_certificate',
             certificateTitle : certificateHtmlData[0].children[0].children["certificate-title"].value,
+            certificateConfigurationData: new Array(),
             certificateData : new Array(),
             security: save_comprobation.security
         }
+        
+        let certificateConfiguration = $('.certificate-configuration-data');
+        if (certificateConfiguration[0].children[1].children["check-approved"].checked){
+
+        }
+        console.log(certificateConfiguration[0].children[0].children["certificate-direction"].checked);
+        console.log(certificateConfiguration[0].children[1].children["check-approved"].checked);
+        console.log(certificateConfiguration[0].children[1].children["check-approved-range"].value);
+        console.log(certificateConfiguration[0].children[2].children["option-table"].value);
+        console.log(certificateConfiguration[0].children[2].children["column"].value);
+        console.log(certificateConfiguration[0].children[2].children["column-value"].value);
+        certificateJsonData.certificateConfigurationData.push({
+            certificateDirection: certificateConfiguration[0].children[0].children["certificate-direction"].checked,
+            checkApproved: certificateConfiguration[0].children[1].children["check-approved"].checked,
+            checkApprovedrange: certificateConfiguration[0].children[1].children["check-approved-range"].value,
+            optionTable: certificateConfiguration[0].children[2].children["option-table"].value,
+            column: certificateConfiguration[0].children[2].children["column"].value,
+            columValue: certificateConfiguration[0].children[2].children["column-value"].value
+        });
 
         certificateChildrenData.forEach(element => {
 

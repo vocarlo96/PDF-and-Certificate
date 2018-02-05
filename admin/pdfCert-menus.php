@@ -22,18 +22,28 @@
             </a>
             <table>
                 <tr>
+                    <th>id</th>
                     <th>title</th>
                     <th>options</th>
                 </tr>
                 <?php
                     $certificate_table = $wpdb->prefix . 'certificate';
-                    $sql = "SELECT title FROM $certificate_table";
+                    $sql = "SELECT *FROM $certificate_table";
                     $certificate_table_data = $wpdb->get_results( $sql );
                     if($certificate_table_data){
-                        foreach($certificate_table_data as $index=>$value){
-                            foreach($value as $title){
-                                echo('<tr><td>' . esc_html($title) . '</td></tr>');
-                            }
+                        // var_dump($certificate_table_data);
+                        foreach($certificate_table_data as $data){
+                            echo('<tr class="certificate-id-'. esc_attr($data->id_certificate) .'">
+                                    <td>' . esc_html($data->id_certificate) . '</td>
+                                    <td>' . esc_html($data->title) . '</td>
+                                    <td> 
+                                        <a class="delete-certificate certificate-id-'. esc_attr($data->id_certificate) .'" href="#">Eliminar</a> 
+                                    </td>
+                                    <td> 
+                                        <a class="edit-certificate" href="#">Edit</a> 
+                                    </td>
+                                    </tr>');
+                            
                         }
                     }
                 ?>
@@ -59,6 +69,31 @@
         <div class="wrap">
 
             <h1>New Certificate</h1>
+
+                <div class="certificate-configuration-data">
+
+                    <div>
+                        <label for="certificate-direction">Pagina en Horizontal</label>
+                        <input type="checkbox" name="certificate-direction" id="certificate-direction">
+                    </div>
+
+                    <div>
+                        <label for="check-approved">Parametro de aprobado</label>
+                        <input type="checkbox" name="check-approved" id="check-approved">
+                        <input type="number" name="check-approved-range" id="check-approved-range" disabled>
+                    </div>
+                    
+                    <div id="options-configure">
+                        <p>Cual es el parametro a comparar</p>
+                        <label for="type">Type</label>
+                        <select name="type" class="option-type">
+                            <option value="-" selected="true">-</option>
+                            <option value="Custom text">Custom text</option>
+                            <option value="database">Database field</option>
+                        </select>
+                    </div>
+
+                </div>
 
                 <div class="certificate-data">
 
@@ -273,8 +308,26 @@
 
     add_action( 'wp_ajax_value_column', 'pdfCert_value_column' );
 
-    // function algo(){
-    //     wp_enqueue_script( 'column-content-js', plugins_url( 'admin/js/column-content.js', __FILE__ ), array('jquery'), '1.0.0',  true );
-    // }
-    
+    function pdfCert_delete_certificate(){
+        global $wpdb;
+        $certificate_id = $_POST['value'];
+        // $sql = "DELETE FROM $table_name WHERE id_certificate=%d";
+        
+        $table_name = $wpdb->prefix . 'certificate_content'; 
+        $wpdb->delete( $table_name, array( 'id_certificate' => $certificate_id ), array( '%d' ) );
+        // $wpdb->query($wpdb->prepare($sql, $certificate_id));
+        
+        $table_name = $wpdb->prefix . 'certificate_validate'; 
+        $wpdb->delete( $table_name, array( 'id_certificate' => $certificate_id ), array( '%d' ) );
+        // $wpdb->query($wpdb->prepare($sql, $certificate_id));
+
+        $table_name = $wpdb->prefix . 'certificate'; 
+        $wpdb->delete( $table_name, array( 'id_certificate' => $certificate_id ), array( '%d' ) );
+        // $wpdb->query($wpdb->prepare($sql, $certificate_id));
+
+        wp_send_json_success( "true" );
+    }
+
+    add_action( 'wp_ajax_delete_certificate', 'pdfCert_delete_certificate');
+
     ?>
