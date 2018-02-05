@@ -2,7 +2,7 @@ jQuery(document).ready(function($) {
     var pageTitle = $('div h1');
     $( 'body' ).on('change', 'select#option-table', function( event ) {
         // console.log(tableOption.value);
-        console.log( event.currentTarget.nextElementSibling.nextElementSibling.children[0]);
+        // console.log( event.currentTarget.nextElementSibling.nextElementSibling.children[0]);
         let tableValue = event.currentTarget.value;
         console.log(tableValue);
         $.ajax({
@@ -16,16 +16,22 @@ jQuery(document).ready(function($) {
             },
             success: function( response ) {
                 $( 'div#message' ).remove();
+                $(event.currentTarget).nextAll().remove();
                 if( true === response.success ) {
                     console.log(response.data);
-                    var columsArray = response.data.replace(/(\[|\]|,|\")/g," ").trim().split(/ +/g);
-                    console.log(columsArray);
-                    var columnsOptions = "";
-                    columsArray.forEach(element => {
-                        columnsOptions += "<option value=" + element + ">" + element + "</option>";
+                    let columnsOptions = '<label for="column">Column</label> <select name="column" class="option-column"> <option value="-" class="column-option">-</option>';
+                    response.data.forEach(element => {
+                        columnsOptions += '<option value="' + element + '">' + element + '</option>'
                     });
-                    console.log('#'+event.currentTarget.id);
-                    $(event.currentTarget.nextElementSibling.nextElementSibling.children[0]).after( columnsOptions );
+                    columnsOptions += '</select>';
+                    // var columsArray = response.data.replace(/(\[|\]|,|\")/g," ").trim().split(/ +/g);
+                    // console.log(columsArray);
+                    // var columnsOptions = "";
+                    // columsArray.forEach(element => {
+                    //     columnsOptions += "<option value=" + element + ">" + element + "</option>";
+                    // });
+                    // console.log('#'+event.currentTarget.id);
+                    $(event.currentTarget).after( columnsOptions );
                 } else {
                     pageTitle.after( '<div id="message" class="error"><p> 1</p></div>' );
                 }

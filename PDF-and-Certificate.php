@@ -24,6 +24,7 @@ defined( 'ABSPATH' ) or die( 'Cannot access pages directly.' );
             wp_enqueue_script( 'save-certificate-js', plugins_url( 'admin/js/save-certificate.js', __FILE__ ), array('jquery'), '1.0.0',  true );
             wp_enqueue_script( 'add-more-js', plugins_url( 'admin/js/add-more.js', __FILE__ ), array('jquery'), '1.0.0',  true );
             wp_enqueue_script( 'delete-certificate-js', plugins_url( 'admin/js/delete-certificate.js', __FILE__ ), array('jquery'), '1.0.0',  true );
+            wp_enqueue_script( 'edit-certificate-js', plugins_url( 'admin/js/edit-certificate.js', __FILE__ ), array('jquery'), '1.0.0',  true );
             wp_enqueue_script( 'media-certificate-picker-js', plugins_url( 'admin/js/media-certificate-picker.js', __FILE__ ), array('jquery', 'media-upload'), '1.0.0', true);
             wp_register_script( 'pdf-make-library-js', plugins_url( 'admin/library/pdfmake.min.js', __FILE__ ), array(), '1.0.0',  true );
             wp_register_script( 'pdf-vfs-fonts-js', plugins_url( 'admin/library/vfs_fonts.js', __FILE__ ), array(), '1.0.0',  true );

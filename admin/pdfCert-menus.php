@@ -40,7 +40,7 @@
                                         <a class="delete-certificate certificate-id-'. esc_attr($data->id_certificate) .'" href="#">Eliminar</a> 
                                     </td>
                                     <td> 
-                                        <a class="edit-certificate" href="#">Edit</a> 
+                                        <a class="edit-certificate certificate-id-'. esc_attr($data->id_certificate) .'" href="#">Edit</a> 
                                     </td>
                                     </tr>');
                             
@@ -86,7 +86,7 @@
                     <div id="options-configure">
                         <p>Cual es el parametro a comparar</p>
                         <label for="type">Type</label>
-                        <select name="type" class="option-type">
+                        <select name="type" class="option-type" disabled>
                             <option value="-" selected="true">-</option>
                             <option value="Custom text">Custom text</option>
                             <option value="database">Database field</option>
@@ -106,23 +106,16 @@
                     </div>
 
                     <div class="certificate-content-wrap">
-                        <div id="certificate-single-content">
+                        <div class="certificate-single-content content-certificate-0">
                             <div id="options-wrap">
                                 <label for="type">Type</label>
-                                <select name="type" class="option-type">
+                                <select name="type" class="option-type content-certificate-0">
                                     <option value="-" selected="true">-</option>
                                     <option value="Custom text">Custom text</option>
                                     <option value="database">Database field</option>
                                     <option value="image">Image</option>
                                 </select>
                             </div>
-                            <!-- <div>
-                                <h5>Dimension</h5>    
-                                <label for="width">Width</label>
-                                <input type="number" name="width" id="width-dimension">
-                                <label for="height">height</label>
-                                <input type="number" name="height" id="height-dimension">
-                            </div> -->
                             <div>
                                 <h5>Position</h5>    
                                 <label for="x">X</label>
@@ -130,10 +123,7 @@
                                 <label for="y">Y</label>
                                 <input type="number" name="y" id="y-position">
                             </div>
-
                         </div>
-                        <!-- <div></div> -->
-
                     </div>
                 </div>
 
@@ -168,9 +158,9 @@
             }
         }
 
-        $columns_names_json = json_encode($columns_names);
+        // $columns_names_json = json_encode($columns_names);
         
-        wp_send_json_success( $columns_names_json );
+        wp_send_json_success( $columns_names );
     }
     add_action( 'wp_ajax_get_colunm_value', 'pdfCert_get_colunm_value' );
     
