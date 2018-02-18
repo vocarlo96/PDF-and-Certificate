@@ -1,7 +1,8 @@
 jQuery(document).ready( ($)=>{
     
-    $('body').on('change', '.option-column', function(event){
-        console.log(event.currentTarget.previousElementSibling.previousElementSibling.value);
+    $('body').on('change', '.option-column', function( event, data ){
+        event.preventDefault();
+        // console.log(event.currentTarget.previousElementSibling.previousElementSibling.value);
 
         let valueColumnData = {
             action: 'value_column',
@@ -19,7 +20,13 @@ jQuery(document).ready( ($)=>{
                 console.log(response);
                 let columnValue = '<label for="column-value">valor</label> <select name="column-value" id="column-value"> <option value="-">-</option>';
                 response.data.forEach(element => {
-                    columnValue += '<option value="' + element + '">' + element + '</option>'
+                    if( data == element ){
+                        columnValue += '<option value="' + element + '" selected>' + element + '</option>'
+
+                    }else{
+                        columnValue += '<option value="' + element + '">' + element + '</option>'
+
+                    }
                 });
                 columnValue += '</select>';
                 $(event.currentTarget).after(columnValue);

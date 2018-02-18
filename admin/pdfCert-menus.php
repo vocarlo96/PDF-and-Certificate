@@ -54,8 +54,7 @@
     }
 
     function pdfCert_secundary_content(){
-        // global $chartsetb;
-        // var_dump($chartsetb);
+
         if ( ! current_user_can('manage_options')){
             return;
         }
@@ -66,7 +65,7 @@
         // var_dump($typenow);
         ?>
         
-        <div class="wrap">
+        <div class="wrap certificate-wrap">
 
             <h1>New Certificate</h1>
 
@@ -106,7 +105,7 @@
                     </div>
 
                     <div class="certificate-content-wrap">
-                        <div class="certificate-single-content content-certificate-0">
+                        <!-- <div class="certificate-single-content content-certificate-0">
                             <div id="options-wrap">
                                 <label for="type">Type</label>
                                 <select name="type" class="option-type content-certificate-0">
@@ -123,7 +122,7 @@
                                 <label for="y">Y</label>
                                 <input type="number" name="y" id="y-position">
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 
@@ -319,5 +318,23 @@
     }
 
     add_action( 'wp_ajax_delete_certificate', 'pdfCert_delete_certificate');
+
+    function pdfCert_edit_Certificate(){
+        global $wpdb;
+        $certificate_id = $_POST['value'];
+        // wp_send_json_success($certificate_id);
+        $table_name = $wpdb->prefix . 'certificate_content'; 
+        $sql = "SELECT *FROM $table_name WHERE id_certificate=%d";
+        $certificate_content_result = $wpdb->get_results($wpdb->prepare($sql, $certificate_id));
+        // wp_send_json_success($certificate_content_result[0]);
+        $certificate_content = array();
+        foreach($certificate_content_result as $data){
+            array_push($certificate_content, $data);
+        }
+        wp_send_json_success($certificate_content);
+
+    }
+
+    add_action('wp_ajax_edit_certificate','pdfCert_edit_Certificate');
 
     ?>

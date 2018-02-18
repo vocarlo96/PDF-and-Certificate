@@ -1,0 +1,87 @@
+.certificate-content-wrap{
+    border: #ccc solid 1px;
+    border-radius: 5px; 
+    background:rgb(231, 231, 231);
+}
+
+.certificate-single-content{
+    /* margin-bottom: 20px; */
+    padding: 18px;
+    border-bottom: #ccc dashed 1px;
+}
+
+.certificate-single-content label{
+    display: block;
+    padding: 4px 0;
+}
+
+
+.certificate-single-content select{
+    display: block;
+}
+
+.certificate-single-content select.option-type{
+    display: inline;
+}
+
+.certificate-single-content label[for="x"], .certificate-single-content label[for="y"], .certificate-single-content label[for="width"], .certificate-single-content label[for="height"], .certificate-single-content label[for="type"]{
+    display: inline;
+    padding: 4px;
+}
+
+.certificate-single-content input[type="number"]{
+    /* display: inline; */
+    margin-right: 8px;
+}
+
+.certificate-single-content{
+    position: relative;
+}
+
+.certificate-single-content img{
+    width: 200px;
+    margin: 4px;
+    position: absolute;
+    right: 8%;
+    top: 21%;
+}
+
+.image-certificate-dimension{
+    width: 50%;
+}
+
+.certificate-single-content button{
+    float: right;
+    margin: 4px;
+}
+
+.certificate-wrap button{
+    background: #0085ba;
+    border-color: #0073aa #006799 #006799;
+    box-shadow: 0 1px 0 #006799;
+    color: #fff;
+    text-shadow: 0 -1px 1px #006799,1px 0 1px #006799,0 1px 1px #006799,-1px 0 1px #006799;
+    padding: 6px 14px;
+    line-height: normal;
+    font-size: 14px;
+    vertical-align: middle;
+    height: auto;
+    margin: 10px 4px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 3px;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+
+@media only screen and (min-width: 993px) {
+
+    .certificate-single-content #options-wrap mg{
+        top: 25%;
+        right: 5%;
+    }
+    
+    .image-certificate-dimension{
+        width: 100%;
+    }
+}

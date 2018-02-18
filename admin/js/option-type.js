@@ -1,16 +1,23 @@
 jQuery(document).ready( ($)=>{
 
     // $('.option-type').change( (event)=>{
-        $('body').on('change', '.option-type', (event)=>{
-        console.log(this);
-        console.log(event);
+        $('body').on('change', '.option-type', (event, data, data2, data3)=>{
+            event.preventDefault();
+
         let optionType = $(event.currentTarget);
-        // let optionType = $(this);
+
         let optionTypeValue = optionType.val();
-        console.log(optionType);
+        console.log(optionTypeValue+"  algo");
+
+        // if(option){
+        //     optionTypeValue = option;
+        // }
+
+        // console.log(optionTypeValue);
 
         switch(optionTypeValue){
             case "Custom text":
+            
                 optionType.nextAll().remove();
                 $('.certificate-single-content' + '.' + event.currentTarget.classList[1] + ' .image-certificate-dimension').remove();
                 let optionTextHtml = '<label for="text">Texto</label><input type="text" name="text" id="custom-text">';
@@ -39,10 +46,18 @@ jQuery(document).ready( ($)=>{
                                 let optionHtml = '<label for="table">Table</label> <select name="table" id="option-table"> <option value="-">-</option>';
                                 optionTypeResponse.shift();
                                 optionTypeResponse.forEach(element => {
-                                    optionHtml += '<option value="' + element + '">' + element + '</option>';
+                                    if(data == element){
+                                        optionHtml += '<option value="' + element + '" selected>' + element + '</option>';
+                                    }else{
+                                        optionHtml += '<option value="' + element + '">' + element + '</option>';
+
+                                    }
                                 });
                                 optionHtml += '</select>';
                                 optionType.after( optionHtml );
+                                if(data){
+                                    $('select#option-table').trigger('change', [data2, data3]);
+                                }
                                 break;
             
                         }
