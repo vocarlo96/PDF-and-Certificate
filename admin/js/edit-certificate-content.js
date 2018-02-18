@@ -18,7 +18,23 @@ $(document).ready( ($)=>{
             data: certificateRowData,
             success: (response)=>{
                 console.log(response.data);
-                response.data.forEach(element => {
+
+                response.data[0].forEach(element => {
+                    let certificateTitle = $('#certificate-title');
+                    certificateTitle.attr('value', element.title);
+                });
+
+                response.data[1].forEach(element => {
+                    let certificateUserEnable = Array.from($('.certificate-user-enable table tbody tr td'));
+                    for( let i = 0; i < certificateUserEnable.length; i += 3){
+                        if (certificateUserEnable[i].textContent == element.id_user){
+                            userId: certificateUserEnable[i+2].children[0].click();
+                        }
+                        
+                    };
+                });
+
+                response.data[2].forEach(element => {
                     switch(element.type_content){
                         
                         case "Custom text":

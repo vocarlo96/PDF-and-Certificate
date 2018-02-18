@@ -2,39 +2,46 @@ jQuery(document).ready(($) => {
 
     $('.save-certificate').click(() => {
 
+        let url = new URL(window.location.href);
+        let id = url.searchParams.get("id");
+
         var certificateHtmlData = $('.certificate-data');
 
-        console.log(certificateHtmlData);
-        console.log(certificateHtmlData[0].children[0].children);
-        console.log(certificateHtmlData[0].children[0].children["certificate-title"].value);
+        // console.log(certificateHtmlData);
+        // console.log(certificateHtmlData[0].children[0].children);
+        // console.log(certificateHtmlData[0].children[0].children["certificate-title"].value);
 
         var certificateChildrenData = Array.from(certificateHtmlData[0].children[1].children);
 
         var certificateJsonData = {
             action : 'save_certificate',
             certificateTitle : certificateHtmlData[0].children[0].children["certificate-title"].value,
-            certificateConfigurationData: new Array(),
+            certificateUserEnableData: new Array(),
             certificateData : new Array(),
             security: save_comprobation.security
         }
         
-        let certificateConfiguration = $('.certificate-configuration-data');
-        if (certificateConfiguration[0].children[1].children["check-approved"].checked){
-            certificateJsonData.certificateConfigurationData.push({
-                certificateDirection: certificateConfiguration[0].children[0].children["certificate-direction"].checked,
-                checkApproved: certificateConfiguration[0].children[1].children["check-approved"].checked,
-                checkApprovedrange: certificateConfiguration[0].children[1].children["check-approved-range"].value,
-                optionTable: certificateConfiguration[0].children[2].children["option-table"].value,
-                column: certificateConfiguration[0].children[2].children["column"].value,
-                columValue: certificateConfiguration[0].children[2].children["column-value"].value
-            });
-        }
-        // console.log(certificateConfiguration[0].children[0].children["certificate-direction"].checked);
-        // console.log(certificateConfiguration[0].children[1].children["check-approved"].checked);
-        // console.log(certificateConfiguration[0].children[1].children["check-approved-range"].value);
-        // console.log(certificateConfiguration[0].children[2].children["option-table"].value);
-        // console.log(certificateConfiguration[0].children[2].children["column"].value);
-        // console.log(certificateConfiguration[0].children[2].children["column-value"].value);
+        let certificateUserEnable = Array.from($('.certificate-user-enable table tbody tr td'));
+        for( let i = 2; i < certificateUserEnable.length; i += 3){
+            if (certificateUserEnable[i].children[0].checked){
+                certificateJsonData.certificateUserEnableData.push({
+                    userId: certificateUserEnable[i-2].textContent
+                });
+            }
+
+            // console.log(i);
+
+            // console.log(certificateUserEnable[i]);
+            // console.log(certificateUserEnable[i].children[0]);
+            // console.log(certificateUserEnable[i].children[0].checked);
+            // console.log(certificateUserEnable[i-1].textContent);
+            // console.log(certificateUserEnable[i-2].textContent);
+            
+        };
+
+
+        console.log(certificateUserEnable);
+       
 
         certificateChildrenData.forEach(element => {
 
@@ -45,8 +52,6 @@ jQuery(document).ready(($) => {
                     certificateJsonData.certificateData.push({
                         optionType: element.children[0].children["type"].value,
                         customText: element.children[0].children["custom-text"].value,
-                        // widthDimension: element.children[1].children["width-dimension"].value,
-                        // heightDimension: element.children[1].children["height-dimension"].value,
                         xPosition: element.children[1].children["x-position"].value,
                         yPosition: element.children[1].children["y-position"].value
                     });
@@ -58,8 +63,6 @@ jQuery(document).ready(($) => {
                         optionTable: element.children[0].children["option-table"].value,
                         optionColumn: element.children[0].children["column"].value,
                         optionValue: element.children[0].children["column-value"].value,
-                        // widthDimension: element.children[1].children["width-dimension"].value,
-                        // heightDimension: element.children[1].children["height-dimension"].value,
                         xPosition: element.children[1].children["x-position"].value,
                         yPosition: element.children[1].children["y-position"].value
                     });

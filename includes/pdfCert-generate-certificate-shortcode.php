@@ -3,24 +3,34 @@
         if( is_user_logged_in() ){
 
             global $wpdb;
+            $current_user = wp_get_current_user();
+            $table_name = $wpdb->prefix . 'certificate_user_enable';
+            $sql = "SELECT id_certificate FROM $table_name WHERE id_user=%d";
+            $generate_certificate_id = $wpdb->get_results($wpdb->prepare($sql, $current_user->ID));
+
             $table_name = $wpdb->prefix . 'certificate';
-            $sql = "SELECT title FROM $table_name";
-            $generate_certificate_option = $wpdb->get_results($sql);
+            $sql = "SELECT title FROM $table_name WHERE id_certificate=%d";
+            $certificate_title = array();
+            // print_r($generate_certificate_id[0]->id_certificate);
+            foreach($generate_certificate_id as $index => $value){
+                foreach($value as $id){
+                    $generate_certificate_option = $wpdb->get_results($wpdb->prepare($sql, $id));
+                    array_push($certificate_title, $generate_certificate_option[0]->title);
+                }
+            }
             
             $shortcode_html = '<h2>Solicita tu certificado</h2>
                               <label for="generate-certificate-shortcode">Curso</label>
                               <select name="generate-certificate-shortcode" id="generate-certificate-shortcode" >
                                   <option value="-" selected> - </option>';
 
-            foreach($generate_certificate_option as $index => $value) {
-                foreach($value as $title){
-                    $shortcode_html .= '<option value="' . esc_attr($title) . '">' . esc_html($title) . '</option>';
-                }
+            foreach($certificate_title as $data) {
+                    $shortcode_html .= '<option value="' . esc_attr($data) . '">' . esc_html($data) . '</option>';
             };
             
             $shortcode_html .=  '</select>
                               <button id="certificate-request">Solicitar</button>';
-            // print_r($generate_certificate_option);
+            // print_r($certificate_title);
 
             
             return $shortcode_html;
@@ -34,11 +44,18 @@
 
     function pdfCert_generete_certificate(){
         global $wpdb;
-        $table_name = $wpdb->prefix . 'certificate';
+        $current_user = wp_get_current_user();
         $generate_certificate_data = $_POST['value'];
+        
+        $table_name = $wpdb->prefix . 'certificate';
         $sql = "SELECT id_certificate FROM $table_name WHERE title = %s";
         $certificate_id_result = $wpdb->get_results($wpdb->prepare($sql, $generate_certificate_data));
         $certificate_id = $certificate_id_result[0]->id_certificate;
+
+        $table_name = $wpdb->prefix . 'certificate_validate';
+        $sql = "SELECT id_validate FROM $table_name WHERE id_certificate = %d AND id_user = %d";
+        $certificate_exist_result = $wpdb->get_results($wpdb->prepare($sql, array( $certificate_id, $current_user->ID)));
+        $certificate_exist = $certificate_exist_result[0]->id_validate;
 
         $table_name = $wpdb->prefix . 'certificate_content';
         $sql = "SELECT *FROM $table_name WHERE id_certificate = %d";
@@ -47,7 +64,7 @@
         $certificate_data = array();
 
         foreach($certificate_data_results as $index=>$value){
-            // wp_send_json_success( $certificate_data_results );
+
             switch($value->type_content){
 
                 case 'Custom text':
@@ -65,11 +82,14 @@
             }
         }
 
-        $current_user = wp_get_current_user();
+        if($certificate_exist){
+            wp_send_json_success( $certificate_data );
+        }else{
 
-        $table_name = $wpdb->prefix . 'certificate_validate';
-        $sql = "INSERT INTO $table_name( id_certificate, id_user) VALUES( %d, %d )";
-        $wpdb->query($wpdb->prepare($sql, array($certificate_id, $current_user->ID)));
+            $table_name = $wpdb->prefix . 'certificate_validate';
+            $sql = "INSERT INTO $table_name( id_certificate, id_user) VALUES( %d, %d )";
+            $wpdb->query($wpdb->prepare($sql, array($certificate_id, $current_user->ID)));
+        }
 
         wp_send_json_success( $certificate_data );
     }

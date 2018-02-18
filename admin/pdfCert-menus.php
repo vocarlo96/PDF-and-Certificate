@@ -61,7 +61,7 @@
         global $wpdb;
         global $column_data;
         global $pagenow, $typenow;
-        var_dump($pagenow);
+        // var_dump($pagenow);
         // var_dump($typenow);
         ?>
         
@@ -76,6 +76,38 @@
                         <input type="checkbox" name="certificate-direction" id="certificate-direction">
                     </div>
 
+                    <div class="certificate-user-enable">
+                        <table>
+                            <tr>
+                                <th>Id</th>
+                                <th>user name</th>
+                                <th>enable</th>
+                            </tr>
+                            <?php 
+                                $args = array(
+                                    'orderby' => 'ID',
+                                    'order' => 'ASC',
+                                    'fields' => array(
+                                        'ID',
+                                        'display_name'
+                                    )
+                                );
+                                $users = get_users($args);
+                                foreach($users as $data){
+                                    echo('<tr class="enable-user-'. esc_attr($data->ID) .'">
+                                        <td>' . esc_html($data->ID) . '</td>
+                                        <td>' . esc_html($data->display_name) . '</td>
+                                        <td> 
+                                            <input type="checkbox" class="check-box enable-user-'. esc_attr($data->ID) .'"> 
+                                        </td>
+                                    </tr>');
+                                }
+                            ?>
+                        </table>
+                    </div>
+
+
+<!-- 
                     <div>
                         <label for="check-approved">Parametro de aprobado</label>
                         <input type="checkbox" name="check-approved" id="check-approved">
@@ -90,7 +122,7 @@
                             <option value="Custom text">Custom text</option>
                             <option value="database">Database field</option>
                         </select>
-                    </div>
+                    </div> -->
 
                 </div>
 
@@ -98,7 +130,7 @@
 
                     <div>
                         <label for="certificate-title">Title</label>
-                        <input type="text" name="certificate-title">
+                        <input type="text" name="certificate-title" id="certificate-title">
                         <button id="add-more">Add Content</button>
                         <button id="certificate-preview">Preview</button>
 
@@ -182,6 +214,18 @@
         $sql = "SELECT id_certificate FROM $certificate_table WHERE title=%s";
         $certificate_ids = $wpdb->get_results($wpdb->prepare( $sql , $certificate_title ));
         $certificate_id = $certificate_ids[0]->id_certificate;
+
+        $certificate_user_enable_table = $wpdb->prefix . 'certificate_user_enable';
+        $certificate_user_enable_data = $_POST['certificateUserEnableData'];
+        $sql = "INSERT INTO $certificate_user_enable_table( id_certificate, id_user ) VALUES( %d, %d )";
+
+        foreach($certificate_user_enable_data as $data){
+            $arg = array(
+                $certificate_id,
+                $data['userId']
+            );
+            $wpdb->query( $wpdb->prepare( $sql, $arg ) );
+        }
         
         $certificate_data_table = $wpdb->prefix . 'certificate_content';
         $certificate_data = $_POST['certificateData'];
@@ -323,6 +367,16 @@
         global $wpdb;
         $certificate_id = $_POST['value'];
         // wp_send_json_success($certificate_id);
+
+        $table_name = $wpdb->prefix . 'certificate'; 
+        $sql = "SELECT title FROM $table_name WHERE id_certificate=%d";
+        $certificate_name_result = $wpdb->get_results($wpdb->prepare($sql, $certificate_id));
+        // wp_send_json_success($certificate_content_result[0]);
+        $certificate_name= array();
+        foreach($certificate_name_result as $data){
+            array_push($certificate_name, $data);
+        }
+
         $table_name = $wpdb->prefix . 'certificate_content'; 
         $sql = "SELECT *FROM $table_name WHERE id_certificate=%d";
         $certificate_content_result = $wpdb->get_results($wpdb->prepare($sql, $certificate_id));
@@ -331,7 +385,19 @@
         foreach($certificate_content_result as $data){
             array_push($certificate_content, $data);
         }
-        wp_send_json_success($certificate_content);
+
+        $table_name = $wpdb->prefix . 'certificate_user_enable'; 
+        $sql = "SELECT id_user FROM $table_name WHERE id_certificate=%d";
+        $certificate_user_enable_result = $wpdb->get_results($wpdb->prepare($sql, $certificate_id));
+        // wp_send_json_success($certificate_content_result[0]);
+        $certificate_user_enable = array();
+        foreach($certificate_user_enable_result as $data){
+            array_push($certificate_user_enable, $data);
+        }
+
+        $certificate_data = array($certificate_name, $certificate_user_enable, $certificate_content);
+
+        wp_send_json_success($certificate_data);
 
     }
 

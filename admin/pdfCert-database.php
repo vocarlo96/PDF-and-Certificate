@@ -10,7 +10,7 @@
             PRIMARY KEY  (id_certificate)
         ) $chartset_collate;";
 
-        require_once( ABSPATH . 'wp-admin/includes/upgrade.php');
+        // require_once( ABSPATH . 'wp-admin/includes/upgrade.php');
         dbDelta( $sql );
 
         $table_name2 = $wpdb->prefix . 'certificate_content';
@@ -40,6 +40,18 @@
             id_certificate INT NOT NULL,
             id_user INT NOT NULL,
             PRIMARY KEY  (id_validate),
+            FOREIGN KEY  (id_certificate) REFERENCES $table_name (id_certificate)
+        ) $chartset_collate;";
+
+        dbDelta( $sql );
+
+        $table_name4 = $wpdb->prefix . 'certificate_user_enable';
+
+        $sql = "CREATE TABLE $table_name4 (
+            id_user_enable INT NOT NULL AUTO_INCREMENT,
+            id_certificate INT NOT NULL,
+            id_user INT NOT NULL,
+            PRIMARY KEY  (id_user_enable),
             FOREIGN KEY  (id_certificate) REFERENCES $table_name (id_certificate)
         ) $chartset_collate;";
 
