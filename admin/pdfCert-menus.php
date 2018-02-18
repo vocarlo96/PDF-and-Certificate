@@ -137,24 +137,7 @@
                     </div>
 
                     <div class="certificate-content-wrap">
-                        <!-- <div class="certificate-single-content content-certificate-0">
-                            <div id="options-wrap">
-                                <label for="type">Type</label>
-                                <select name="type" class="option-type content-certificate-0">
-                                    <option value="-" selected="true">-</option>
-                                    <option value="Custom text">Custom text</option>
-                                    <option value="database">Database field</option>
-                                    <option value="image">Image</option>
-                                </select>
-                            </div>
-                            <div>
-                                <h5>Position</h5>    
-                                <label for="x">X</label>
-                                <input type="number" name="x" id="x-position">
-                                <label for="y">Y</label>
-                                <input type="number" name="y" id="y-position">
-                            </div>
-                        </div> -->
+
                     </div>
                 </div>
 
@@ -268,6 +251,18 @@
                         $data['widthDimension'],
                         $data['heightDimension'],
                         $data['imageUrl'],
+                        $data['optionType']
+                    );
+                    $wpdb->query( $wpdb->prepare( $sql2, $arg) );
+                    break;
+
+                case 'userInfo':
+                    $sql2 = "INSERT INTO $certificate_data_table( id_certificate, x_position, y_position, data_value, type_content  ) VALUES( %d, %d, %d, %s, %s )";
+                    $arg = array(
+                        $certificate_id, 
+                        $data['xPosition'], 
+                        $data['yPosition'], 
+                        $data['optionValue'],
                         $data['optionType']
                     );
                     $wpdb->query( $wpdb->prepare( $sql2, $arg) );

@@ -64,6 +64,12 @@ $(document).ready( ($)=>{
                                                                                 '<option value="database">Database field</option>'+
                                                                                 '<option value="image" selected="true">Image</option>';
                                                                 break;
+                                                            case "userInfo":
+                                                                addMoreTextHtml += '<option value="Custom text">Custom text</option>'+
+                                                                                '<option value="database">Database field</option>'+
+                                                                                '<option value="image">Image</option>';
+                                                                                '<option value="userInfo">UserInfo</option>';
+                                                                break;
                                                         }
 
                                                     addMoreTextHtml += '</select>'+
@@ -107,6 +113,12 @@ $(document).ready( ($)=>{
                                                                 addMoreDatabaseHtml += '<option value="Custom text">Custom text</option>'+
                                                                                 '<option value="database">Database field</option>'+
                                                                                 '<option value="image" selected>Image</option>';
+                                                                break;
+                                                            case "userInfo":
+                                                                addMoreTextHtml += '<option value="Custom text">Custom text</option>'+
+                                                                                '<option value="database">Database field</option>'+
+                                                                                '<option value="image">Image</option>';
+                                                                                '<option value="userInfo">UserInfo</option>';
                                                                 break;
                                                         }
 
@@ -152,6 +164,12 @@ $(document).ready( ($)=>{
                                                                                 '<option value="database">Database field</option>'+
                                                                                 '<option value="image" selected="true">Image</option>';
                                                                 break;
+                                                            case "userInfo":
+                                                                addMoreTextHtml += '<option value="Custom text">Custom text</option>'+
+                                                                                '<option value="database">Database field</option>'+
+                                                                                '<option value="image">Image</option>';
+                                                                                '<option value="userInfo">UserInfo</option>';
+                                                                break;
                                                         }
 
                                                     addMoreImageHtml +='</select>'+
@@ -177,7 +195,59 @@ $(document).ready( ($)=>{
                                             '</div>';
 
                             $( '.certificate-content-wrap' ).append(addMoreImageHtml);
-                            
+                            break;
+
+                            case "userInfo":
+                            console.log("user info");
+                            let numUserInfo = $('.certificate-content-wrap')[0].children.length;
+                            // console.log($('.certificate-content-wrap')[0]);
+                                // console.log(element.custom_UserInfo);
+                            let addMoreUserInfoHtml = '<div class="certificate-single-content content-certificate-' + numUserInfo + '">' +
+                                                '<div id="options-wrap">'+
+                                                    '<label for="type">Type</label>'+
+                                                    '<select name="type" class="option-type content-certificate-' + numUserInfo + '">'+
+                                                        '<option value="-">-</option>';
+
+                                                        switch(element.type_content){
+                                                            case "Custom text":
+                                                                addMoreUserInfoHtml += '<option value="Custom text" selected="true">Custom text</option>'+
+                                                                                '<option value="database">Database field</option>'+
+                                                                                '<option value="image">Image</option>'+
+                                                                                '<option value="userInfo" >UserInfo</option>';
+                                                                break;
+                                                            case "database":
+                                                                addMoreUserInfoHtml += '<option value="Custom text">Custom text</option>'+
+                                                                                '<option value="database" selected="true">Database field</option>'+
+                                                                                '<option value="image">Image</option>'+
+                                                                                '<option value="userInfo" >UserInfo</option>';
+                                                                break;
+                                                            case "image":
+                                                                addMoreUserInfoHtml += '<option value="Custom text">Custom text</option>'+
+                                                                                '<option value="database">Database field</option>'+
+                                                                                '<option value="image" selected="true">Image</option>'+
+                                                                                '<option value="userInfo" >UserInfo</option>';               
+                                                                break;
+                                                            case "userInfo":
+                                                                addMoreUserInfoHtml += '<option value="Custom text">Custom text</option>'+
+                                                                                '<option value="database">Database field</option>'+
+                                                                                '<option value="image">Image</option>'+
+                                                                                '<option value="userInfo" selected="true">UserInfo</option>';
+                                                                break;
+                                                        }
+
+                                                    addMoreUserInfoHtml += '</select>'+
+                                                '</div>'+
+                                                '<div>'+
+                                                    '<h5>Position</h5>'+    
+                                                    '<label for="x">X</label>'+
+                                                    '<input type="number" name="x" id="x-position" value="' + element.x_position + '">'+
+                                                    '<label for="y">Y</label>'+
+                                                    '<input type="number" name="y" id="y-position" value="' + element.y_position + '">'+
+                                                '</div>'+
+                                            '</div>';                          
+                            $( '.certificate-content-wrap' ).append(addMoreUserInfoHtml);
+                            $('.option-type.content-certificate-' + numUserInfo).trigger('change', [element.data_value, "userInfo"]);
+
                             break;
                     }
                 });

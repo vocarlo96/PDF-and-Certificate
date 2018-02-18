@@ -59,6 +59,19 @@ jQuery(document).ready( ($) =>{
                             certificate.content.push(contentImage);
                             console.log(certificate.content);
                             break;
+                            
+                        case "userInfo":
+                            console.log('user info');
+                            let contentUserInfo = {
+                                text: element[3].toString(),
+                                absolutePosition:{
+                                    x : parseInt(element[1]),
+                                    y : parseInt(element[2])
+                                }
+                            };
+                            certificate.content.push(contentUserInfo);
+                            console.log(certificate.content);
+                            break;
                     }
                 });
                 pdfMake.createPdf(certificate).download('certificate.pdf');

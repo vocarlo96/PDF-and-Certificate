@@ -80,6 +80,15 @@ jQuery(document).ready(($) => {
                     });
                     break;
 
+                case "userInfo":
+                    certificateJsonData.certificateData.push({
+                        optionType: element.children[0].children["type"].value,
+                        optionValue: element.children[0].children["user-info"].value,
+                        xPosition: element.children[1].children["x-position"].value,
+                        yPosition: element.children[1].children["y-position"].value
+                    });
+                    break;
+
             }
 
             console.log(element.children[0].children["type"].value);

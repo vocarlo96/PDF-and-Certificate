@@ -1,7 +1,6 @@
 jQuery(document).ready(($) => {
 
     $('#certificate-preview').click(() => {
-        alert("entrio");
 
         let image1 = getBase64Image("http://localhost/luz/wp-content/uploads/2017/11/top_image-ptu-1.jpg");
         let image2 = getBase64Image("http://localhost/luz/wp-content/uploads/2017/12/envelope4-green.png");
@@ -9,28 +8,16 @@ jQuery(document).ready(($) => {
 
         var dd = {
             content: [
-                // {
-                //     text:'esto es un texto demostrativo para el plugin',
-                //     absolutePosition: {x:100, y:180}
-                // },
-                // {
-                //     image: image1
-                // },
-                // {
-                //     image: image2
-                // }
+
             ]
             
         }
 
-        // pdfMake.createPdf(dd).open();
-        // pdfMake.createPdf(dd).download('optionalName.pdf');
-
         var certificateHtmlData = $('.certificate-data');
 
-        console.log(certificateHtmlData);
-        console.log(certificateHtmlData[0].children[0].children);
-        console.log(certificateHtmlData[0].children[0].children["certificate-title"].value);
+        // console.log(certificateHtmlData);
+        // console.log(certificateHtmlData[0].children[0].children);
+        // console.log(certificateHtmlData[0].children[0].children["certificate-title"].value);
 
         var certificateChildrenData = Array.from(certificateHtmlData[0].children[1].children);
 
@@ -42,14 +29,7 @@ jQuery(document).ready(($) => {
 
         certificateChildrenData.forEach(element => {
 
-            console.log(element.children[0].children["type"].value);
-            // console.log(element.children[0].children["option-table"].value);
-            // console.log(element.children[0].children["option-column"].value);
-            // console.log(element.children[1].children["width-dimension"].value);
-            // console.log(element.children[1].children["height-dimension"].value);
-            // console.log(element.children[2].children["x-position"].value);
-            // console.log(element.children[2].children["y-position"].value);
-            // console.log(certificateJsonData);
+            // console.log(element.children[0].children["type"].value);
 
             switch(element.children[0].children["type"].value){
 
@@ -63,7 +43,7 @@ jQuery(document).ready(($) => {
                         }
                     };
                     dd.content.push(contentCustomText);
-                    console.log(dd.content);
+                    // console.log(dd.content);
                     break;
 
                 case "database":
@@ -76,17 +56,11 @@ jQuery(document).ready(($) => {
                         }
                     };
                     dd.content.push(contentDatabase);
-                    console.log(dd.content);
+                    // console.log(dd.content);
                     break;
 
                 case "image":
                     console.log("image");
-                    // console.log(JSON.parse(element.children[0].children["certificate-image-data"].value.toString()));
-                    // console.log(element.children[1].children["width-dimension"]);
-                    // console.log(element.children[1].children["height-dimension"]);
-
-                    // console.log(element.children[2].children["x-position"]);
-                    // console.log(element.children[2].children["y-position"]);
                     let urlImagePreview = JSON.parse(element.children[0].children["certificate-image-data"].value.toString());
                     let dataUrl = getBase64Image(urlImagePreview[0].url.toString());
                     let contentCustomImage = {
@@ -99,8 +73,22 @@ jQuery(document).ready(($) => {
                         }
                     };
                     dd.content.push(contentCustomImage);
-                    console.log(dd.content);
+                    // console.log(dd.content);
                     break;
+                
+                case "userInfo":
+                    console.log("userInfo");
+                    let contentUserInfo = {
+                        text: element.children[0].children["user-info"].value.toString(),
+                        absolutePosition:{
+                            x : parseInt(element.children[1].children["x-position"].value),
+                            y : parseInt(element.children[1].children["y-position"].value)
+                        }
+                    };
+                    dd.content.push(contentUserInfo);
+                    // console.log(dd.content);
+                    break;
+
             }
         });
         console.log(dd.content);
@@ -110,10 +98,10 @@ jQuery(document).ready(($) => {
 
     function getBase64Image(uri) {
         // Create an empty canvas element
-        console.log(uri);
+        // console.log(uri);
         let img = new Image();
         img.src = uri;
-        console.log(img.src)
+        // console.log(img.src);
         let canvas = document.createElement("canvas");
         canvas.width = img.width;
         canvas.height = img.height;
@@ -129,10 +117,10 @@ jQuery(document).ready(($) => {
         let dataURL;
         if( uri.indexOf(".png") ){
             dataURL = canvas.toDataURL("image/png");
-            console.log(dataURL);
+            // console.log(dataURL);
         }else if( uri.indexOf(".jpg") ){
             dataURL = canvas.toDataURL("image/jpg");
-            console.log(dataURL);
+            // console.log(dataURL);
 
         }
 

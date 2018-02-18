@@ -79,6 +79,31 @@
                     array_push($certificate_data, array($value->type_content, $value->x_position, $value->y_position, $value->height, $value->width, $value->data_value));
                     break;
 
+                case 'userInfo':
+
+                    switch($value->data_value){
+                        case "ID":
+                            $user_info_data = $current_user->ID;
+                            break;
+                        case "display_name":
+                            $user_info_data = $current_user->display_name;
+                            break;
+                        case "user_firstname":
+                            $user_info_data = $current_user->user_firstnam;
+                            break;
+                        case "user_lastname":
+                            $user_info_data = $current_user->user_lastname;
+                            break;
+                        case "user_email":
+                            $user_info_data = $current_user->user_email;
+                            break;
+                        case "user_login":
+                            $user_info_data = $current_user->user_login;
+                            break;
+                    }
+                    array_push($certificate_data, array($value->type_content, $value->x_position, $value->y_position, $user_info_data));
+                    break;
+
             }
         }
 

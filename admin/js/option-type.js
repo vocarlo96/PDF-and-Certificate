@@ -75,6 +75,31 @@ jQuery(document).ready( ($)=>{
                 let dimensionHtml = '<div class="image-certificate-dimension"><h5>Dimension</h5><label for="width">Width</label><input type="number" name="width" id="width-dimension"> <label for="height">height</label><input type="number" name="height" id="height-dimension"></div> ';
                 $('.certificate-single-content' + '.' + event.currentTarget.classList[1] + ' #options-wrap').after( dimensionHtml );
                 break;
+
+            case "userInfo":
+                optionType.nextAll().remove();
+                $('.certificate-single-content' + '.' + event.currentTarget.classList[1] + ' .image-certificate-dimension').remove();
+                let optionUserInfoHtml = '<select name="user-info" id="user-info">' +
+                                        '<option value="-"> - </option>';
+                let userInfoValues =  ['ID', 'display_name', 'user_firstname', 'user_lastname', 'user_email', 'user_login'];
+                userInfoValues.forEach(element => {
+                    if(data == element){
+                        optionUserInfoHtml += '<option value="' + element + '" selected>' + element + '</option>';
+                    }else{
+                        optionUserInfoHtml += '<option value="' + element + '">' + element + '</option>';
+
+                    }
+                });
+                // optionHtml += '</select>';
+                //                         '<option value="ID">ID</option>' +
+                //                         '<option value="display_name">Display name</option>' +
+                //                         '<option value="user_firstname">First name</option>' +
+                //                         '<option value="user_lastname">Last name</option>' +
+                //                         '<option value="user_email">Email</option>' +
+                //                         '<option value="user_login">Username</option>' +
+                //                         '</select>';
+                optionType.after( optionUserInfoHtml );
+                break;
         }
 
 
