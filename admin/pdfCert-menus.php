@@ -257,6 +257,7 @@
                     break;
 
                 case 'userInfo':
+                case 'certificateInfo':
                     $sql2 = "INSERT INTO $certificate_data_table( id_certificate, x_position, y_position, data_value, type_content  ) VALUES( %d, %d, %d, %s, %s )";
                     $arg = array(
                         $certificate_id, 

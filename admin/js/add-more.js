@@ -13,6 +13,7 @@ jQuery(document).ready( ($) => {
                                     '<option value="database">Database field</option>'+
                                     '<option value="image">Image</option>'+
                                     '<option value="userInfo">UserInfo</option>'+
+                                    '<option value="certificateInfo">certificate info</option>'+
                                 '</select>'+
                             '</div>'+
                             '<div>'+

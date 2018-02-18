@@ -59,7 +59,7 @@ jQuery(document).ready( ($) =>{
                             certificate.content.push(contentImage);
                             console.log(certificate.content);
                             break;
-                            
+
                         case "userInfo":
                             console.log('user info');
                             let contentUserInfo = {
@@ -70,6 +70,19 @@ jQuery(document).ready( ($) =>{
                                 }
                             };
                             certificate.content.push(contentUserInfo);
+                            console.log(certificate.content);
+                            break;
+
+                        case "certificateInfo":
+                            console.log('certificate info');
+                            let contentCertificateInfo = {
+                                text: element[3].toString(),
+                                absolutePosition:{
+                                    x : parseInt(element[1]),
+                                    y : parseInt(element[2])
+                                }
+                            };
+                            certificate.content.push(contentCertificateInfo);
                             console.log(certificate.content);
                             break;
                     }

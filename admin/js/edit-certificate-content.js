@@ -249,6 +249,66 @@ $(document).ready( ($)=>{
                             $('.option-type.content-certificate-' + numUserInfo).trigger('change', [element.data_value, "userInfo"]);
 
                             break;
+
+                            case "certificateInfo":
+                            console.log("certificate info");
+                            let numCertificateInfo = $('.certificate-content-wrap')[0].children.length;
+                            // console.log($('.certificate-content-wrap')[0]);
+                                // console.log(element.custom_CertificateInfo);
+                            let addMoreCertificateInfoHtml = '<div class="certificate-single-content content-certificate-' + numCertificateInfo + '">' +
+                                                '<div id="options-wrap">'+
+                                                    '<label for="type">Type</label>'+
+                                                    '<select name="type" class="option-type content-certificate-' + numCertificateInfo + '">'+
+                                                        '<option value="-">-</option>';
+
+                                                        switch(element.type_content){
+                                                            case "Custom text":
+                                                                addMoreCertificateInfoHtml += '<option value="Custom text" selected="true">Custom text</option>'+
+                                                                                '<option value="database">Database field</option>'+
+                                                                                '<option value="image">Image</option>'+
+                                                                                '<option value="userInfo" >UserInfo</option>';
+                                                                break;
+                                                            case "database":
+                                                                addMoreCertificateInfoHtml += '<option value="Custom text">Custom text</option>'+
+                                                                                '<option value="database" selected="true">Database field</option>'+
+                                                                                '<option value="image">Image</option>'+
+                                                                                '<option value="userInfo" >UserInfo</option>';
+                                                                break;
+                                                            case "image":
+                                                                addMoreCertificateInfoHtml += '<option value="Custom text">Custom text</option>'+
+                                                                                '<option value="database">Database field</option>'+
+                                                                                '<option value="image" selected="true">Image</option>'+
+                                                                                '<option value="userInfo" >UserInfo</option>';               
+                                                                break;
+                                                            case "userInfo":
+                                                                addMoreCertificateInfoHtml += '<option value="Custom text">Custom text</option>'+
+                                                                                '<option value="database">Database field</option>'+
+                                                                                '<option value="image">Image</option>'+
+                                                                                '<option value="userInfo" selected="true">UserInfo</option>';
+                                                                break;
+                                                            case "certificateInfo":
+                                                                addMoreCertificateInfoHtml += '<option value="Custom text">Custom text</option>'+
+                                                                                '<option value="database">Database field</option>'+
+                                                                                '<option value="image">Image</option>'+
+                                                                                '<option value="userInfo">UserInfo</option>'+
+                                                                                '<option value="certificateInfo" selected="true">Certificate Info</option>';
+                                                                break;
+                                                        }
+
+                                                    addMoreCertificateInfoHtml += '</select>'+
+                                                '</div>'+
+                                                '<div>'+
+                                                    '<h5>Position</h5>'+    
+                                                    '<label for="x">X</label>'+
+                                                    '<input type="number" name="x" id="x-position" value="' + element.x_position + '">'+
+                                                    '<label for="y">Y</label>'+
+                                                    '<input type="number" name="y" id="y-position" value="' + element.y_position + '">'+
+                                                '</div>'+
+                                            '</div>';                          
+                            $( '.certificate-content-wrap' ).append(addMoreCertificateInfoHtml);
+                            $('.option-type.content-certificate-' + numCertificateInfo).trigger('change', [element.data_value, "certificateInfo"]);
+
+                            break;
                     }
                 });
 

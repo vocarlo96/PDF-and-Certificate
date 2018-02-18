@@ -104,6 +104,19 @@
                     array_push($certificate_data, array($value->type_content, $value->x_position, $value->y_position, $user_info_data));
                     break;
 
+                case 'certificateInfo':
+
+                    switch($value->data_value){
+                        case "ID":
+                            $certificate_info = $certificate_id;
+                            break;
+                        case "title":
+                            $certificate_info = $generate_certificate_data;
+                            break;
+                    }
+                    array_push($certificate_data, array($value->type_content, $value->x_position, $value->y_position, $certificate_info));
+                    break;
+
             }
         }
 

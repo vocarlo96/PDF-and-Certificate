@@ -90,15 +90,26 @@ jQuery(document).ready( ($)=>{
 
                     }
                 });
-                // optionHtml += '</select>';
-                //                         '<option value="ID">ID</option>' +
-                //                         '<option value="display_name">Display name</option>' +
-                //                         '<option value="user_firstname">First name</option>' +
-                //                         '<option value="user_lastname">Last name</option>' +
-                //                         '<option value="user_email">Email</option>' +
-                //                         '<option value="user_login">Username</option>' +
-                //                         '</select>';
+                optionUserInfoHtml += '</select>';
                 optionType.after( optionUserInfoHtml );
+                break;
+
+            case "certificateInfo":
+                optionType.nextAll().remove();
+                $('.certificate-single-content' + '.' + event.currentTarget.classList[1] + ' .image-certificate-dimension').remove();
+                let optionCertificateInfoHtml = '<select name="certificate-info" id="certificate-info">' +
+                                        '<option value="-"> - </option>';
+                let CertificateInfoValues =  ['ID', 'title'];
+                CertificateInfoValues.forEach(element => {
+                    if(data == element){
+                        optionCertificateInfoHtml += '<option value="' + element + '" selected>' + element + '</option>';
+                    }else{
+                        optionCertificateInfoHtml += '<option value="' + element + '">' + element + '</option>';
+
+                    }
+                });
+                optionCertificateInfoHtml += '</select>';
+                optionType.after( optionCertificateInfoHtml );
                 break;
         }
 

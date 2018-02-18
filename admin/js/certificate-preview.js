@@ -89,6 +89,19 @@ jQuery(document).ready(($) => {
                     // console.log(dd.content);
                     break;
 
+                case "certificateInfo":
+                    console.log("certificateInfo");
+                    let contentCertificateInfo = {
+                        text: element.children[0].children["certificate-info"].value.toString(),
+                        absolutePosition:{
+                            x : parseInt(element.children[1].children["x-position"].value),
+                            y : parseInt(element.children[1].children["y-position"].value)
+                        }
+                    };
+                    dd.content.push(contentCertificateInfo);
+                    // console.log(dd.content);
+                    break;
+
             }
         });
         console.log(dd.content);
