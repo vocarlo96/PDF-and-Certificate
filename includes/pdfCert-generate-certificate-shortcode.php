@@ -42,11 +42,38 @@
 
     add_shortcode( 'generate_certificate', 'pdfCrt_generate_certificate_shortcode' );
 
-    function pdfCert_generete_certificate(){
+    function pdfCert_aditional_info_check(){
         global $wpdb;
         $current_user = wp_get_current_user();
         $generate_certificate_data = $_POST['value'];
         
+        $table_name = $wpdb->prefix . 'certificate';
+        $sql = "SELECT id_certificate FROM $table_name WHERE title = %s";
+        $certificate_id_result = $wpdb->get_results($wpdb->prepare($sql, $generate_certificate_data));
+        $certificate_id = $certificate_id_result[0]->id_certificate;
+
+        $table_name = $wpdb->prefix . 'certificate_content';
+        $type = 'aditionalInfo';
+        $sql = "SELECT *FROM $table_name WHERE id_certificate = %d and type_content= %s";
+        $certificate_data_results = $wpdb->get_results($wpdb->prepare($sql, array( $certificate_id, $type )));
+
+        $aditional_info_data = array();
+        foreach($certificate_data_results as $index=>$value){
+
+            array_push($aditional_info_data, array($value->custom_text, $value->data_value));
+
+        }
+
+        wp_send_json_success( $aditional_info_data );
+    }
+
+    add_action( 'wp_ajax_aditional_info_check', 'pdfCert_aditional_info_check' );
+
+    function pdfCert_generete_certificate(){
+        global $wpdb;
+        $current_user = wp_get_current_user();
+        $generate_certificate_data = $_POST['value'];
+        $cerificate_aditiona_info_data = $_POST['aditionalInfo'];
         $table_name = $wpdb->prefix . 'certificate';
         $sql = "SELECT id_certificate FROM $table_name WHERE title = %s";
         $certificate_id_result = $wpdb->get_results($wpdb->prepare($sql, $generate_certificate_data));
@@ -115,6 +142,11 @@
                             break;
                     }
                     array_push($certificate_data, array($value->type_content, $value->x_position, $value->y_position, $certificate_info));
+                    break;
+
+                case 'aditionalInfo':
+                    array_push($certificate_data, array($value->type_content, $value->x_position, $value->y_position, $cerificate_aditiona_info_data[0]));
+                    array_shift ( $cerificate_aditiona_info_data);
                     break;
 
             }

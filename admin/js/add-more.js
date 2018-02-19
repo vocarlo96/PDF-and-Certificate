@@ -14,6 +14,7 @@ jQuery(document).ready( ($) => {
                                     '<option value="image">Image</option>'+
                                     '<option value="userInfo">UserInfo</option>'+
                                     '<option value="certificateInfo">certificate info</option>'+
+                                    '<option value="aditionalInfo">Aditional Info</option>'+
                                 '</select>'+
                             '</div>'+
                             '<div>'+

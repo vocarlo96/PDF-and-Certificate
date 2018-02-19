@@ -2,9 +2,6 @@ jQuery(document).ready(($) => {
 
     $('.save-certificate').click(() => {
 
-        let url = new URL(window.location.href);
-        let id = url.searchParams.get("id");
-
         var certificateHtmlData = $('.certificate-data');
 
         // console.log(certificateHtmlData);
@@ -18,7 +15,15 @@ jQuery(document).ready(($) => {
             certificateTitle : certificateHtmlData[0].children[0].children["certificate-title"].value,
             certificateUserEnableData: new Array(),
             certificateData : new Array(),
+            certificateState : '',
             security: save_comprobation.security
+        }
+
+        let url = new URL(window.location.href);
+        let id = url.searchParams.get("id");
+
+        if(id){
+            certificateJsonData.certificateState = 'true';
         }
         
         let certificateUserEnable = Array.from($('.certificate-user-enable table tbody tr td'));
@@ -93,6 +98,16 @@ jQuery(document).ready(($) => {
                     certificateJsonData.certificateData.push({
                         optionType: element.children[0].children["type"].value,
                         optionValue: element.children[0].children["certificate-info"].value,
+                        xPosition: element.children[1].children["x-position"].value,
+                        yPosition: element.children[1].children["y-position"].value
+                    });
+                    break;
+
+                case "aditionalInfo":
+                    certificateJsonData.certificateData.push({
+                        optionType: element.children[0].children["type"].value,
+                        optionField: element.children[0].children["aditional-info-field"].value,
+                        optionValue: element.children[0].children["aditional-info"].value,
                         xPosition: element.children[1].children["x-position"].value,
                         yPosition: element.children[1].children["y-position"].value
                     });

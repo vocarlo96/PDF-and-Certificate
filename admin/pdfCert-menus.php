@@ -61,8 +61,7 @@
         global $wpdb;
         global $column_data;
         global $pagenow, $typenow;
-        // var_dump($pagenow);
-        // var_dump($typenow);
+
         ?>
         
         <div class="wrap certificate-wrap">
@@ -105,24 +104,6 @@
                             ?>
                         </table>
                     </div>
-
-
-<!-- 
-                    <div>
-                        <label for="check-approved">Parametro de aprobado</label>
-                        <input type="checkbox" name="check-approved" id="check-approved">
-                        <input type="number" name="check-approved-range" id="check-approved-range" disabled>
-                    </div>
-                    
-                    <div id="options-configure">
-                        <p>Cual es el parametro a comparar</p>
-                        <label for="type">Type</label>
-                        <select name="type" class="option-type" disabled>
-                            <option value="-" selected="true">-</option>
-                            <option value="Custom text">Custom text</option>
-                            <option value="database">Database field</option>
-                        </select>
-                    </div> -->
 
                 </div>
 
@@ -186,17 +167,33 @@
         if ( ! current_user_can( 'manage_options' ) ) {
             return wp_send_json_error( 'You are not allow to do this.' );
         }
-
-        global $wpdb;
-        $certificate_table = $wpdb->prefix . 'certificate';
-        $certificate_title = $_POST['certificateTitle'];
-        // $save_data = json_decode(stripslashes($_POST['value']));
-        $sql = "INSERT INTO $certificate_table( title ) VALUES( %s )";
-        $wpdb->query( $wpdb->prepare( $sql, $certificate_title) );
         
-        $sql = "SELECT id_certificate FROM $certificate_table WHERE title=%s";
-        $certificate_ids = $wpdb->get_results($wpdb->prepare( $sql , $certificate_title ));
-        $certificate_id = $certificate_ids[0]->id_certificate;
+        global $wpdb;
+        $certificate_state = $_POST['certificateState'];
+        $certificate_title = $_POST['certificateTitle'];
+        
+        $certificate_table = $wpdb->prefix . 'certificate';
+        if($certificate_state != 'true'){
+            $sql = "INSERT INTO $certificate_table( title ) VALUES( %s )";
+            $wpdb->query( $wpdb->prepare( $sql, $certificate_title) );
+
+            $sql = "SELECT id_certificate FROM $certificate_table WHERE title=%s";
+            $certificate_ids = $wpdb->get_results($wpdb->prepare( $sql , $certificate_title ));
+            $certificate_id = $certificate_ids[0]->id_certificate;
+        }else{
+            $sql = "SELECT id_certificate FROM $certificate_table WHERE title=%s";
+            $certificate_ids = $wpdb->get_results($wpdb->prepare( $sql , $certificate_title ));
+            $certificate_id = $certificate_ids[0]->id_certificate;
+
+            $table_name = $wpdb->prefix . 'certificate_content'; 
+            $wpdb->delete( $table_name, array( 'id_certificate' => $certificate_id ), array( '%d' ) );
+
+            $table_name = $wpdb->prefix . 'certificate_user_enable'; 
+            $wpdb->delete( $table_name, array( 'id_certificate' => $certificate_id ), array( '%d' ) );
+
+        }
+        
+        // $save_data = json_decode(stripslashes($_POST['value']));
 
         $certificate_user_enable_table = $wpdb->prefix . 'certificate_user_enable';
         $certificate_user_enable_data = $_POST['certificateUserEnableData'];
@@ -269,6 +266,19 @@
                     $wpdb->query( $wpdb->prepare( $sql2, $arg) );
                     break;
 
+                case 'aditionalInfo':
+                    $sql2 = "INSERT INTO $certificate_data_table( id_certificate, x_position, y_position, data_value, custom_text, type_content  ) VALUES( %d, %d, %d, %s, %s, %s )";
+                    $arg = array(
+                        $certificate_id, 
+                        $data['xPosition'], 
+                        $data['yPosition'], 
+                        $data['optionValue'],
+                        $data['optionField'],
+                        $data['optionType']
+                    );
+                    $wpdb->query( $wpdb->prepare( $sql2, $arg) );
+                    break;
+
             }
 
         }
@@ -284,9 +294,6 @@
 
         switch($option_data){
             
-            case "Custom text":
-                break;
-            
             case "database":
                 $sql = "SHOW TABLES";
                 $results = $wpdb->get_results($sql);
@@ -300,10 +307,6 @@
                 }
                 $tables_names_json = json_encode($tables_names);
                 wp_send_json_success( $tables_names_json);
-                // add_action( 'admin_enqueue_scripts', 'algo');
-                break;
-            
-            case "image":
                 break;
             
         }
@@ -341,6 +344,8 @@
         global $wpdb;
         $certificate_id = $_POST['value'];
         // $sql = "DELETE FROM $table_name WHERE id_certificate=%d";
+        $table_name = $wpdb->prefix . 'certificate_user_enable'; 
+        $wpdb->delete( $table_name, array( 'id_certificate' => $certificate_id ), array( '%d' ) );
         
         $table_name = $wpdb->prefix . 'certificate_content'; 
         $wpdb->delete( $table_name, array( 'id_certificate' => $certificate_id ), array( '%d' ) );

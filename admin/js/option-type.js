@@ -17,7 +17,6 @@ jQuery(document).ready( ($)=>{
 
         switch(optionTypeValue){
             case "Custom text":
-            
                 optionType.nextAll().remove();
                 $('.certificate-single-content' + '.' + event.currentTarget.classList[1] + ' .image-certificate-dimension').remove();
                 let optionTextHtml = '<label for="text">Texto</label><input type="text" name="text" id="custom-text">';
@@ -110,6 +109,33 @@ jQuery(document).ready( ($)=>{
                 });
                 optionCertificateInfoHtml += '</select>';
                 optionType.after( optionCertificateInfoHtml );
+                break;
+
+            case "aditionalInfo":
+                optionType.nextAll().remove();
+                $('.certificate-single-content' + '.' + event.currentTarget.classList[1] + ' .image-certificate-dimension').remove();
+                
+                let optionAditionalInfotHtml;                
+                if(data2){
+                    optionAditionalInfotHtml = '<label for="aditional-info-field">Nombre del campo</label>'+
+                                                '<input type="text" name="text" id="aditional-info-field" value="'+data2+'">';
+                }else{
+                    optionAditionalInfotHtml = '<label for="aditional-info-field">Nombre del campo</label>'+
+                                                '<input type="text" name="text" id="aditional-info-field">';
+                }
+                optionAditionalInfotHtml += '<select name="aditional-info" id="aditional-info">';
+                let CertificateAditionalInfoValues =  ['text', 'number'];
+                CertificateAditionalInfoValues.forEach(element => {
+                    if(data == element){
+                        optionAditionalInfotHtml += '<option value="' + element + '" selected>' + element + '</option>';
+                    }else{
+                        optionAditionalInfotHtml += '<option value="' + element + '">' + element + '</option>';
+
+                    }
+                });
+                optionAditionalInfotHtml += '</select>';
+                console.log(optionAditionalInfotHtml);
+                optionType.after( optionAditionalInfotHtml );
                 break;
         }
 

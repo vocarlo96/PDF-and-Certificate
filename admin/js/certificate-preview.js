@@ -102,6 +102,19 @@ jQuery(document).ready(($) => {
                     // console.log(dd.content);
                     break;
 
+                case "aditionalInfo":
+                    console.log("aditionalInfo");
+                    let contentCertificateAditionalInfo = {
+                        text: element.children[0].children["aditional-info-field"].value.toString(),
+                        absolutePosition:{
+                            x : parseInt(element.children[1].children["x-position"].value),
+                            y : parseInt(element.children[1].children["y-position"].value)
+                        }
+                    };
+                    dd.content.push(contentCertificateAditionalInfo);
+                    // console.log(dd.content);
+                    break;
+
             }
         });
         console.log(dd.content);

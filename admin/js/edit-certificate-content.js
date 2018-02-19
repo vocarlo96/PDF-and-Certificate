@@ -197,7 +197,7 @@ $(document).ready( ($)=>{
                             $( '.certificate-content-wrap' ).append(addMoreImageHtml);
                             break;
 
-                            case "userInfo":
+                        case "userInfo":
                             console.log("user info");
                             let numUserInfo = $('.certificate-content-wrap')[0].children.length;
                             // console.log($('.certificate-content-wrap')[0]);
@@ -250,7 +250,7 @@ $(document).ready( ($)=>{
 
                             break;
 
-                            case "certificateInfo":
+                        case "certificateInfo":
                             console.log("certificate info");
                             let numCertificateInfo = $('.certificate-content-wrap')[0].children.length;
                             // console.log($('.certificate-content-wrap')[0]);
@@ -307,8 +307,75 @@ $(document).ready( ($)=>{
                                             '</div>';                          
                             $( '.certificate-content-wrap' ).append(addMoreCertificateInfoHtml);
                             $('.option-type.content-certificate-' + numCertificateInfo).trigger('change', [element.data_value, "certificateInfo"]);
-
                             break;
+
+                        case "aditionalInfo":
+                            console.log("aditional info");
+                            let numCertificateAditionalInfo = $('.certificate-content-wrap')[0].children.length;
+                            // console.log($('.certificate-content-wrap')[0]);
+                                // console.log(element.custom_CertificateInfo);
+                            let addMoreCertificateAditionalInfoHtml = '<div class="certificate-single-content content-certificate-' + numCertificateAditionalInfo + '">' +
+                                                '<div id="options-wrap">'+
+                                                    '<label for="type">Type</label>'+
+                                                    '<select name="type" class="option-type content-certificate-' + numCertificateAditionalInfo + '">'+
+                                                        '<option value="-">-</option>';
+
+                                                        switch(element.type_content){
+                                                            case "Custom text":
+                                                                addMoreCertificateAditionalInfoHtml += '<option value="Custom text" selected="true">Custom text</option>'+
+                                                                                '<option value="database">Database field</option>'+
+                                                                                '<option value="image">Image</option>'+
+                                                                                '<option value="userInfo" >UserInfo</option>';
+                                                                break;
+                                                            case "database":
+                                                                addMoreCertificateAditionalInfoHtml += '<option value="Custom text">Custom text</option>'+
+                                                                                '<option value="database" selected="true">Database field</option>'+
+                                                                                '<option value="image">Image</option>'+
+                                                                                '<option value="userInfo" >UserInfo</option>';
+                                                                break;
+                                                            case "image":
+                                                                addMoreCertificateAditionalInfoHtml += '<option value="Custom text">Custom text</option>'+
+                                                                                '<option value="database">Database field</option>'+
+                                                                                '<option value="image" selected="true">Image</option>'+
+                                                                                '<option value="userInfo" >UserInfo</option>';               
+                                                                break;
+                                                            case "userInfo":
+                                                                addMoreCertificateAditionalInfoHtml += '<option value="Custom text">Custom text</option>'+
+                                                                                '<option value="database">Database field</option>'+
+                                                                                '<option value="image">Image</option>'+
+                                                                                '<option value="userInfo" selected="true">UserInfo</option>';
+                                                                break;
+                                                            case "certificateInfo":
+                                                                addMoreCertificateAditionalInfoHtml += '<option value="Custom text">Custom text</option>'+
+                                                                                '<option value="database">Database field</option>'+
+                                                                                '<option value="image">Image</option>'+
+                                                                                '<option value="userInfo">UserInfo</option>'+
+                                                                                '<option value="certificateInfo" selected="true">Certificate Info</option>';
+                                                                break;
+                                                            case "aditionalInfo":
+                                                                addMoreCertificateAditionalInfoHtml += '<option value="Custom text">Custom text</option>'+
+                                                                                '<option value="database">Database field</option>'+
+                                                                                '<option value="image">Image</option>'+
+                                                                                '<option value="userInfo">UserInfo</option>'+
+                                                                                '<option value="certificateInfo">Certificate Info</option>'+
+                                                                                '<option value="aditionalInfo" selected="true">Aditional Info</option>';
+                                                                break;
+                                                        }
+
+                                                    addMoreCertificateAditionalInfoHtml += '</select>'+
+                                                '</div>'+
+                                                '<div>'+
+                                                    '<h5>Position</h5>'+    
+                                                    '<label for="x">X</label>'+
+                                                    '<input type="number" name="x" id="x-position" value="' + element.x_position + '">'+
+                                                    '<label for="y">Y</label>'+
+                                                    '<input type="number" name="y" id="y-position" value="' + element.y_position + '">'+
+                                                '</div>'+
+                                            '</div>';                          
+                            $( '.certificate-content-wrap' ).append(addMoreCertificateAditionalInfoHtml);
+                            $('.option-type.content-certificate-' + numCertificateAditionalInfo).trigger('change', [element.data_value, element.custom_text, "certificateInfo"]);
+                            break;
+
                     }
                 });
 
