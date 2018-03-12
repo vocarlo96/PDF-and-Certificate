@@ -5,6 +5,7 @@ jQuery(document).ready( ($) => {
         console.log($('.certificate-content-wrap')[0]);
         
         addMoreHtml = '<div class="certificate-single-content content-certificate-' + num + '">' +
+                            '<i class="content-delete content-certificate-' + num + '">Eliminar X</i>'+
                             '<div id="options-wrap">'+
                                 '<label for="type">Type</label>'+
                                 '<select name="type" class="option-type content-certificate-' + num + '">'+
@@ -28,5 +29,9 @@ jQuery(document).ready( ($) => {
 
         $( '.certificate-content-wrap' ).append(addMoreHtml);
     } );
+
+    $('body').on('click', '.content-delete', (event)=>{
+        $('.certificate-single-content' + '.' + event.currentTarget.classList[1]).remove();
+    });
 
 });

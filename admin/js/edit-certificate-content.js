@@ -43,6 +43,7 @@ $(document).ready( ($)=>{
                             // console.log($('.certificate-content-wrap')[0]);
                                 console.log(element.custom_text);
                             let addMoreTextHtml = '<div class="certificate-single-content content-certificate-' + numText + '">' +
+                                                '<i class="content-delete content-certificate-' + numText + '">Eliminar X</i>'+
                                                 '<div id="options-wrap">'+
                                                     '<label for="type">Type</label>'+
                                                     '<select name="type" class="option-type content-certificate-' + numText + '">'+
@@ -93,6 +94,7 @@ $(document).ready( ($)=>{
                             let numDatabase = $('.certificate-content-wrap')[0].children.length;
                             // console.log($('.certificate-content-wrap')[0]);
                             let addMoreDatabaseHtml = '<div class="certificate-single-content content-certificate-' + numDatabase + '">' +
+                                                '<i class="content-delete content-certificate-' + numDatabase  + '">Eliminar X</i>'+
                                                 '<div id="options-wrap">'+
                                                     '<label for="type">Type</label>'+
                                                     '<select name="type" class="option-type content-certificate-' + numDatabase + '">'+
@@ -143,6 +145,7 @@ $(document).ready( ($)=>{
                             let numImage = $('.certificate-content-wrap')[0].children.length;
                             // console.log($('.certificate-content-wrap')[0]);
                             let addMoreImageHtml = '<div class="certificate-single-content content-certificate-' + numImage + '">' +
+                                                '<i class="content-delete content-certificate-' + numImage  + '">Eliminar X</i>'+                                                    
                                                 '<div id="options-wrap">'+
                                                     '<label for="type">Type</label>'+
                                                     '<select name="type" class="option-type content-certificate-' + numImage + '">'+
@@ -176,7 +179,7 @@ $(document).ready( ($)=>{
                                                     '<button class="add-certificate-image">Seleccionar imagen</button>'+
                                                     '<button class="delete-certificate-image">Borrar imagen</button>'+
                                                     '<img id="certificate-image" src="' + element.data_value + '"/>'+
-                                                    '<input id="certificate-image-data" type="hidden">'+
+                                                    '<input id="certificate-image-data" type="hidden" value="'+ element.data_value +'">'+
                                                 '</div>'+
                                                 '<div class="image-certificate-dimension">'+
                                                     '<h5>Dimension</h5>'+
@@ -203,6 +206,7 @@ $(document).ready( ($)=>{
                             // console.log($('.certificate-content-wrap')[0]);
                                 // console.log(element.custom_UserInfo);
                             let addMoreUserInfoHtml = '<div class="certificate-single-content content-certificate-' + numUserInfo + '">' +
+                                                '<i class="content-delete content-certificate-' + numUserInfo  + '">Eliminar X</i>'+                            
                                                 '<div id="options-wrap">'+
                                                     '<label for="type">Type</label>'+
                                                     '<select name="type" class="option-type content-certificate-' + numUserInfo + '">'+
@@ -256,6 +260,7 @@ $(document).ready( ($)=>{
                             // console.log($('.certificate-content-wrap')[0]);
                                 // console.log(element.custom_CertificateInfo);
                             let addMoreCertificateInfoHtml = '<div class="certificate-single-content content-certificate-' + numCertificateInfo + '">' +
+                                                '<i class="content-delete content-certificate-' + numCertificateInfo  + '">Eliminar X</i>'+                                                    
                                                 '<div id="options-wrap">'+
                                                     '<label for="type">Type</label>'+
                                                     '<select name="type" class="option-type content-certificate-' + numCertificateInfo + '">'+
@@ -315,6 +320,7 @@ $(document).ready( ($)=>{
                             // console.log($('.certificate-content-wrap')[0]);
                                 // console.log(element.custom_CertificateInfo);
                             let addMoreCertificateAditionalInfoHtml = '<div class="certificate-single-content content-certificate-' + numCertificateAditionalInfo + '">' +
+                                                '<i class="content-delete content-certificate-' + numCertificateAditionalInfo  + '">Eliminar X</i>'+                                                            
                                                 '<div id="options-wrap">'+
                                                     '<label for="type">Type</label>'+
                                                     '<select name="type" class="option-type content-certificate-' + numCertificateAditionalInfo + '">'+

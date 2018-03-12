@@ -17,37 +17,39 @@
         
         <div class="wrap">
             <h1>PDF and Certificate</h1>
-            <a href="<?php echo esc_url( admin_url() . 'admin.php?page=new_certificate' ); ?>">
+            <a class="add-new-certificate" href="<?php echo esc_url( admin_url() . 'admin.php?page=new_certificate' ); ?>">
                 Add new
             </a>
-            <table>
-                <tr>
-                    <th>id</th>
-                    <th>title</th>
-                    <th>options</th>
-                </tr>
-                <?php
-                    $certificate_table = $wpdb->prefix . 'certificate';
-                    $sql = "SELECT *FROM $certificate_table";
-                    $certificate_table_data = $wpdb->get_results( $sql );
-                    if($certificate_table_data){
-                        // var_dump($certificate_table_data);
-                        foreach($certificate_table_data as $data){
-                            echo('<tr class="certificate-id-'. esc_attr($data->id_certificate) .'">
-                                    <td>' . esc_html($data->id_certificate) . '</td>
-                                    <td>' . esc_html($data->title) . '</td>
-                                    <td> 
-                                        <a class="delete-certificate certificate-id-'. esc_attr($data->id_certificate) .'" href="#">Eliminar</a> 
-                                    </td>
-                                    <td> 
-                                        <a class="edit-certificate certificate-id-'. esc_attr($data->id_certificate) .'" href="#">Edit</a> 
-                                    </td>
-                                    </tr>');
-                            
+            <div class="add-new-certificate-table">
+                <table>
+                    <tr>
+                        <th>id</th>
+                        <th>title</th>
+                        <th colspan="2">options</th>
+                    </tr>
+                    <?php
+                        $certificate_table = $wpdb->prefix . 'certificate';
+                        $sql = "SELECT *FROM $certificate_table";
+                        $certificate_table_data = $wpdb->get_results( $sql );
+                        if($certificate_table_data){
+                            // var_dump($certificate_table_data);
+                            foreach($certificate_table_data as $data){
+                                echo('<tr class="certificate-id-'. esc_attr($data->id_certificate) .'">
+                                        <td>' . esc_html($data->id_certificate) . '</td>
+                                        <td>' . esc_html($data->title) . '</td>
+                                        <td> 
+                                            <a class="delete-certificate certificate-id-'. esc_attr($data->id_certificate) .'" href="#">Eliminar</a> 
+                                        </td>
+                                        <td> 
+                                            <a class="edit-certificate certificate-id-'. esc_attr($data->id_certificate) .'" href="#">Edit</a> 
+                                        </td>
+                                        </tr>');
+                                
+                            }
                         }
-                    }
-                ?>
-            </table>
+                    ?>
+                </table>
+            </div>
         </div>
         
         <?php

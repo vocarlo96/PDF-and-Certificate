@@ -33,97 +33,88 @@ jQuery(document).ready(($) => {
                     userId: certificateUserEnable[i-2].textContent
                 });
             }
-
-            // console.log(i);
-
-            // console.log(certificateUserEnable[i]);
-            // console.log(certificateUserEnable[i].children[0]);
-            // console.log(certificateUserEnable[i].children[0].checked);
-            // console.log(certificateUserEnable[i-1].textContent);
-            // console.log(certificateUserEnable[i-2].textContent);
-            
         };
 
 
-        console.log(certificateUserEnable);
-       
+        // console.log(certificateUserEnable);
+        console.log(certificateHtmlData[0].children[1].children);
 
         certificateChildrenData.forEach(element => {
 
-            switch(element.children[0].children["type"].value){
+            switch(element.children[1].children["type"].value){
                 // Eliminar las dimensiones en los campos de texto puesto a aque estos son innecesarios aca 
 
                 case "Custom text":
                     certificateJsonData.certificateData.push({
-                        optionType: element.children[0].children["type"].value,
-                        customText: element.children[0].children["custom-text"].value,
-                        xPosition: element.children[1].children["x-position"].value,
-                        yPosition: element.children[1].children["y-position"].value
-                    });
-                    break;
-
-                case "database":
-                    certificateJsonData.certificateData.push({
-                        optionType: element.children[0].children["type"].value,
-                        optionTable: element.children[0].children["option-table"].value,
-                        optionColumn: element.children[0].children["column"].value,
-                        optionValue: element.children[0].children["column-value"].value,
-                        xPosition: element.children[1].children["x-position"].value,
-                        yPosition: element.children[1].children["y-position"].value
-                    });
-                    break;
-
-                case "image":
-                    let urlImagePreview = JSON.parse(element.children[0].children["certificate-image-data"].value.toString());
-                    certificateJsonData.certificateData.push({
-                        optionType: element.children[0].children["type"].value,
-                        imageUrl: urlImagePreview[0].url.toString(),
-                        widthDimension: element.children[1].children["width-dimension"].value,
-                        heightDimension: element.children[1].children["height-dimension"].value,
+                        optionType: element.children[1].children["type"].value,
+                        customText: element.children[1].children["custom-text"].value,
                         xPosition: element.children[2].children["x-position"].value,
                         yPosition: element.children[2].children["y-position"].value
                     });
                     break;
 
+                case "database":
+                    certificateJsonData.certificateData.push({
+                        optionType: element.children[1].children["type"].value,
+                        optionTable: element.children[1].children["option-table"].value,
+                        optionColumn: element.children[1].children["column"].value,
+                        optionValue: element.children[1].children["column-value"].value,
+                        xPosition: element.children[2].children["x-position"].value,
+                        yPosition: element.children[2].children["y-position"].value
+                    });
+                    break;
+
+                case "image":
+                     console.log(element.children[1].children["certificate-image-data"].value.toString());
+                    //  let urlImagePreview
+                    //  if(id){
+                    //     urlImagePreview = [{
+                    //         url: element.children[1].children["certificate-image-data"].value.toString()
+                    //     }];
+                    //  }else{
+                    //      urlImagePreview = JSON.parse(element.children[1].children["certificate-image-data"].value.toString());
+                    //  }
+                     
+                    certificateJsonData.certificateData.push({
+                        optionType: element.children[1].children["type"].value,
+                        // imageUrl: urlImagePreview[0].url.toString(),
+                        imageUrl: element.children[1].children["certificate-image"].src.toString(),
+                        widthDimension: element.children[2].children["width-dimension"].value,
+                        heightDimension: element.children[2].children["height-dimension"].value,
+                        xPosition: element.children[3].children["x-position"].value,
+                        yPosition: element.children[3].children["y-position"].value
+                    });
+                    break;
+
                 case "userInfo":
                     certificateJsonData.certificateData.push({
-                        optionType: element.children[0].children["type"].value,
-                        optionValue: element.children[0].children["user-info"].value,
-                        xPosition: element.children[1].children["x-position"].value,
-                        yPosition: element.children[1].children["y-position"].value
+                        optionType: element.children[1].children["type"].value,
+                        optionValue: element.children[1].children["user-info"].value,
+                        xPosition: element.children[2].children["x-position"].value,
+                        yPosition: element.children[2].children["y-position"].value
                     });
                     break;
 
                 case "certificateInfo":
                     certificateJsonData.certificateData.push({
-                        optionType: element.children[0].children["type"].value,
-                        optionValue: element.children[0].children["certificate-info"].value,
-                        xPosition: element.children[1].children["x-position"].value,
-                        yPosition: element.children[1].children["y-position"].value
+                        optionType: element.children[1].children["type"].value,
+                        optionValue: element.children[1].children["certificate-info"].value,
+                        xPosition: element.children[2].children["x-position"].value,
+                        yPosition: element.children[2].children["y-position"].value
                     });
                     break;
 
                 case "aditionalInfo":
                     certificateJsonData.certificateData.push({
-                        optionType: element.children[0].children["type"].value,
-                        optionField: element.children[0].children["aditional-info-field"].value,
-                        optionValue: element.children[0].children["aditional-info"].value,
-                        xPosition: element.children[1].children["x-position"].value,
-                        yPosition: element.children[1].children["y-position"].value
+                        optionType: element.children[1].children["type"].value,
+                        optionField: element.children[1].children["aditional-info-field"].value,
+                        optionValue: element.children[1].children["aditional-info"].value,
+                        xPosition: element.children[2].children["x-position"].value,
+                        yPosition: element.children[2].children["y-position"].value
                     });
                     break;
 
             }
-
-            console.log(element.children[0].children["type"].value);
-            // console.log(element.children[0].children["option-table"].value);
-            // console.log(element.children[0].children["option-column"].value);
-            // console.log(element.children[1].children["width-dimension"].value);
-            // console.log(element.children[1].children["height-dimension"].value);
-            // console.log(element.children[2].children["x-position"].value);
-            // console.log(element.children[2].children["y-position"].value);
-            // console.log(certificateJsonData);
-            // console.log(JSON.stringify(certificateJsonData));
         });
 
         $.ajax({
@@ -132,6 +123,7 @@ jQuery(document).ready(($) => {
             dataType: 'json',
             data : certificateJsonData,
             success : function(response){
+                // history.go(-1);
                 console.log("bien");
             },
             error: function(error){

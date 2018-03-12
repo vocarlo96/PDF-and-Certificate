@@ -53,6 +53,7 @@ defined( 'ABSPATH' ) or die( 'Cannot access pages directly.' );
         global $pagenow, $typenow;
 
         if( is_user_logged_in() && $pagenow == 'index.php' ){
+            wp_enqueue_style( 'certificate-shortcode-css',  plugins_url( 'includes/css/certificate-shortcode.css', __FILE__ ), array(), '1.0.0',  'screen');
             wp_register_script( 'pdf-make-library-js', plugins_url( 'admin/library/pdfmake.min.js', __FILE__ ), array(), '1.0.0',  true );
             wp_register_script( 'pdf-vfs-fonts-js', plugins_url( 'admin/library/vfs_fonts.js', __FILE__ ), array(), '1.0.0',  true );
             wp_enqueue_script( 'generate-certificate-js', plugins_url( 'includes/js/generate-certificate.js', __FILE__ ), array('jquery', 'pdf-make-library-js', 'pdf-vfs-fonts-js'), '1.0.0',  true );

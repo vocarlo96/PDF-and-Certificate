@@ -2,16 +2,19 @@ jQuery(document).ready(($) => {
 
     $('#certificate-preview').click(() => {
 
-        let image1 = getBase64Image("http://localhost/luz/wp-content/uploads/2017/11/top_image-ptu-1.jpg");
-        let image2 = getBase64Image("http://localhost/luz/wp-content/uploads/2017/12/envelope4-green.png");
-
+        // let image1 = getBase64Image("http://localhost/luz/wp-content/uploads/2017/11/top_image-ptu-1.jpg");
+        // let image2 = getBase64Image("http://localhost/luz/wp-content/uploads/2017/12/envelope4-green.png");
 
         var dd = {
+            pageSize: 'letter',
+            pageOrientation: 'landscape',
             content: [
 
             ]
-            
         }
+
+        let url = new URL(window.location.href);
+        let id = url.searchParams.get("id");
 
         var certificateHtmlData = $('.certificate-data');
 
@@ -31,15 +34,15 @@ jQuery(document).ready(($) => {
 
             // console.log(element.children[0].children["type"].value);
 
-            switch(element.children[0].children["type"].value){
+            switch(element.children[1].children["type"].value){
 
                 case "Custom text":
                     console.log("text");
                     let contentCustomText = {
-                        text: element.children[0].children["custom-text"].value.toString(),
+                        text: element.children[1].children["custom-text"].value.toString(),
                         absolutePosition:{
-                            x : parseInt(element.children[1].children["x-position"].value),
-                            y : parseInt(element.children[1].children["y-position"].value)
+                            x : parseInt(element.children[2].children["x-position"].value),
+                            y : parseInt(element.children[2].children["y-position"].value)
                         }
                     };
                     dd.content.push(contentCustomText);
@@ -49,10 +52,10 @@ jQuery(document).ready(($) => {
                 case "database":
                     console.log("database");
                     let contentDatabase = {
-                        text: element.children[0].children["column-value"].value.toString(),
+                        text: element.children[1].children["column-value"].value.toString(),
                         absolutePosition:{
-                            x : parseInt(element.children[1].children["x-position"].value),
-                            y : parseInt(element.children[1].children["y-position"].value)
+                            x : parseInt(element.children[2].children["x-position"].value),
+                            y : parseInt(element.children[2].children["y-position"].value)
                         }
                     };
                     dd.content.push(contentDatabase);
@@ -61,15 +64,23 @@ jQuery(document).ready(($) => {
 
                 case "image":
                     console.log("image");
-                    let urlImagePreview = JSON.parse(element.children[0].children["certificate-image-data"].value.toString());
-                    let dataUrl = getBase64Image(urlImagePreview[0].url.toString());
+                    // let urlImagePreview
+                    //  if(id){
+                    //     urlImagePreview = [{
+                    //         url: element.children[1].children["certificate-image-data"].value.toString()
+                    //     }];
+                    //  }else{
+                    //      urlImagePreview = JSON.parse(element.children[1].children["certificate-image-data"].value.toString());
+                    //  }
+                    // let dataUrl = getBase64Image(urlImagePreview[0].url.toString());
+                    let dataUrl = getBase64Image(element.children[1].children["certificate-image"].src.toString());
                     let contentCustomImage = {
                         image: dataUrl,
-                        width: parseInt(element.children[1].children["width-dimension"].value),
-			            height: parseInt(element.children[1].children["height-dimension"].value),
+                        width: parseInt(element.children[2].children["width-dimension"].value),
+			            height: parseInt(element.children[2].children["height-dimension"].value),
                         absolutePosition:{
-                            x : parseInt(element.children[2].children["x-position"].value),
-                            y : parseInt(element.children[2].children["y-position"].value)
+                            x : parseInt(element.children[3].children["x-position"].value),
+                            y : parseInt(element.children[3].children["y-position"].value)
                         }
                     };
                     dd.content.push(contentCustomImage);
@@ -79,10 +90,10 @@ jQuery(document).ready(($) => {
                 case "userInfo":
                     console.log("userInfo");
                     let contentUserInfo = {
-                        text: element.children[0].children["user-info"].value.toString(),
+                        text: element.children[1].children["user-info"].value.toString(),
                         absolutePosition:{
-                            x : parseInt(element.children[1].children["x-position"].value),
-                            y : parseInt(element.children[1].children["y-position"].value)
+                            x : parseInt(element.children[2].children["x-position"].value),
+                            y : parseInt(element.children[2].children["y-position"].value)
                         }
                     };
                     dd.content.push(contentUserInfo);
@@ -92,10 +103,10 @@ jQuery(document).ready(($) => {
                 case "certificateInfo":
                     console.log("certificateInfo");
                     let contentCertificateInfo = {
-                        text: element.children[0].children["certificate-info"].value.toString(),
+                        text: element.children[1].children["certificate-info"].value.toString(),
                         absolutePosition:{
-                            x : parseInt(element.children[1].children["x-position"].value),
-                            y : parseInt(element.children[1].children["y-position"].value)
+                            x : parseInt(element.children[2].children["x-position"].value),
+                            y : parseInt(element.children[2].children["y-position"].value)
                         }
                     };
                     dd.content.push(contentCertificateInfo);
@@ -105,10 +116,10 @@ jQuery(document).ready(($) => {
                 case "aditionalInfo":
                     console.log("aditionalInfo");
                     let contentCertificateAditionalInfo = {
-                        text: element.children[0].children["aditional-info-field"].value.toString(),
+                        text: element.children[1].children["aditional-info-field"].value.toString(),
                         absolutePosition:{
-                            x : parseInt(element.children[1].children["x-position"].value),
-                            y : parseInt(element.children[1].children["y-position"].value)
+                            x : parseInt(element.children[2].children["x-position"].value),
+                            y : parseInt(element.children[2].children["y-position"].value)
                         }
                     };
                     dd.content.push(contentCertificateAditionalInfo);

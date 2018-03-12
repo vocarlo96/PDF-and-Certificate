@@ -1,0 +1,40 @@
+.certificate-shortcode-wrap{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin: 25px;
+    width: 100%;
+}
+
+.certificate-shortcode-wrap label{
+    margin: 8px;
+}
+
+.certificate-shortcode-wrap select, .certificate-shortcode-wrap input{
+    height: 35px;
+    width: 75%;
+    padding: 0 !important;
+}
+
+.certificate-aditional-info-modal{
+    position: absolute;
+    background: #666;
+    width: 140%;
+    padding: 30px;
+    border-radius: 5px;
+    z-index: 100;
+}
+
+.certificate-aditional-info-modal input{
+    margin-bottom: 8px;
+    width: 100%;
+}
+
+.modal-close{
+    color: #e96656;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}

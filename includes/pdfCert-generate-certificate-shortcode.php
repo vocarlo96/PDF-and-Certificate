@@ -19,7 +19,8 @@
                 }
             }
             
-            $shortcode_html = '<h2>Solicita tu certificado</h2>
+            $shortcode_html = '<div class="certificate-shortcode-wrap">
+                                <h3>Solicita tu certificado</h3>
                               <label for="generate-certificate-shortcode">Curso</label>
                               <select name="generate-certificate-shortcode" id="generate-certificate-shortcode" >
                                   <option value="-" selected> - </option>';
@@ -29,7 +30,8 @@
             };
             
             $shortcode_html .=  '</select>
-                              <button id="certificate-request">Solicitar</button>';
+                              <button id="certificate-request">Solicitar</button>
+                              </div>';
             // print_r($certificate_title);
 
             
@@ -84,6 +86,14 @@
         $certificate_exist_result = $wpdb->get_results($wpdb->prepare($sql, array( $certificate_id, $current_user->ID)));
         $certificate_exist = $certificate_exist_result[0]->id_validate;
 
+        if(!$certificate_exist){
+            $table_name = $wpdb->prefix . 'certificate_validate';
+            $sql = "INSERT INTO $table_name( id_certificate, id_user) VALUES( %d, %d )";
+            $wpdb->query($wpdb->prepare($sql, array($certificate_id, $current_user->ID)));
+            $certificate_exist_result = $wpdb->get_results($wpdb->prepare($sql, array( $certificate_id, $current_user->ID)));
+            $certificate_exist = $certificate_exist_result[0]->id_validate;
+        }
+
         $table_name = $wpdb->prefix . 'certificate_content';
         $sql = "SELECT *FROM $table_name WHERE id_certificate = %d";
         $certificate_data_results = $wpdb->get_results($wpdb->prepare($sql, $certificate_id));
@@ -135,7 +145,7 @@
 
                     switch($value->data_value){
                         case "ID":
-                            $certificate_info = $certificate_id;
+                            $certificate_info = $certificate_exist;
                             break;
                         case "title":
                             $certificate_info = $generate_certificate_data;
@@ -150,15 +160,6 @@
                     break;
 
             }
-        }
-
-        if($certificate_exist){
-            wp_send_json_success( $certificate_data );
-        }else{
-
-            $table_name = $wpdb->prefix . 'certificate_validate';
-            $sql = "INSERT INTO $table_name( id_certificate, id_user) VALUES( %d, %d )";
-            $wpdb->query($wpdb->prepare($sql, array($certificate_id, $current_user->ID)));
         }
 
         wp_send_json_success( $certificate_data );

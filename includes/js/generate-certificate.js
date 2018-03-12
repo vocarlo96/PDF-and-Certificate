@@ -16,7 +16,7 @@ jQuery(document).ready( ($) =>{
             data: aditionalInfoData,
             success: function(response){
                 console.log(response.data);
-                let aditionalInfoModal = '<div class="certificate-aditional-info-modal"><h3>Información adicional</h3><p>Rellenar los siguientes campos, esta info es necesaria para solicitar el certificado</p>';
+                let aditionalInfoModal = '<div class="certificate-aditional-info-modal"><i class="modal-close">X</i><h3>Información adicional</h3><p>Rellenar los siguientes campos, esta info es necesaria para solicitar el certificado</p>';
                 response.data.forEach(element => {
                     
                     switch(element[1]){
@@ -41,7 +41,7 @@ jQuery(document).ready( ($) =>{
         $( 'body' ).on('click', 'button#aditional-info-send', function(){
             let certificateAditionalInfoModal = $('.certificate-aditional-info-modal');
             let certificateAditionalInfoData = new Array();
-            for(let i = 3; i < certificateAditionalInfoModal[0].children.length; i+=2){
+            for(let i = 4; i < certificateAditionalInfoModal[0].children.length; i+=2){
                 certificateAditionalInfoData.push(certificateAditionalInfoModal[0].children[i].value);
             }
             console.log(certificateAditionalInfoData);
@@ -63,6 +63,8 @@ jQuery(document).ready( ($) =>{
                     data: generateCertificateData,
                     success: function(response){
                         let certificate = {
+                            pageSize: 'letter',
+                            pageOrientation: 'landscape',
                             content: new Array()
                         }
                         console.log(response.data);

@@ -1,7 +1,11 @@
-.certificate-content-wrap{
+.certificate-content-wrap, .certificate-user-enable, .add-new-certificate-table{
     border: #ccc solid 1px;
     border-radius: 5px; 
     background:rgb(231, 231, 231);
+}
+
+.add-new-certificate-table{
+    margin:30px 0;
 }
 
 .certificate-single-content{
@@ -55,7 +59,7 @@
     margin: 4px;
 }
 
-.certificate-wrap button{
+.certificate-wrap button, .add-new-certificate{
     background: #0085ba;
     border-color: #0073aa #006799 #006799;
     box-shadow: 0 1px 0 #006799;
@@ -72,6 +76,26 @@
     border-radius: 3px;
     white-space: nowrap;
     box-sizing: border-box;
+}
+
+.certificate-user-enable table, .add-new-certificate-table table{
+    width: 100%;
+    text-align: justify;
+    table-layout: inherit;
+    border-collapse: collapse;
+    border-radius: 5px; 
+}
+
+.certificate-user-enable table td, .certificate-user-enable table th, .add-new-certificate-table table th, .add-new-certificate-table table td{
+    padding:3px 10px;
+    border: 0.5px solid #ccc;
+
+}
+
+.content-delete{
+    position: absolute;
+    top: 5px;
+    right: 5px;
 }
 
 @media only screen and (min-width: 993px) {
